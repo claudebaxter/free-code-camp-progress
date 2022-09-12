@@ -1,0 +1,76 @@
+/* reset browser styles opensource from https://zerotocode.today/ tutorial */
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1.2;
+}
+ol {
+  padding-left: 1.4em;
+  list-style: decimal;
+}
+ul {
+  padding-left: 1.4em;
+  list-style: square;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+/* end reset browser styles from https://zerotocode.today/ open source tutorial
+I prefer resetting brower defaults to avoid issues across various devices/browsers*/
+img {
+  max-width: 100%;
+  display: block;
+  height: auto;
+  margin: 0 auto;
+}
+
+body {
+  margin: 10px;
+  border: 5px solid rgb(0, 0, 0);
+  background-color: rgb(150,150,150);
+  padding: 10px;
+  text-align: center;
+}
+
+figcaption, figure {
+  background-color: pink;
+  border: 10px solid rgb(0,0,0);
+  padding: 5px;
+}
+
+#img-div {
+  background: white;
+  padding: 10px;
+  margin: 0;
+}
+
+#img-caption {
+  margin: 15px 0 5px 0;
+}
+
+h1, a {
+   font-family: Arial, sans-serif;
+  text-align: center;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  margin: 0 auto 10px auto;
+}
+
+p, figcaption {
+    font-family: Helvetica;
+  font-size: 1.35em;
+  margin: 20px;
+  text-align: center;
+}
