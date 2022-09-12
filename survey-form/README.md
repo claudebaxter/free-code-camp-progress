@@ -2,4 +2,4 @@
 
 Example survey form for Dark Coin project. Completed tutorial from freecodecamp.org.
 
-To use, download these files to the same directory and open index.html in your browser.
+To view this page, click <a href=https://elborracho420.github.io/free-code-camp-progress/survey-form/index.html title="Test-Survey"> here.</a>
