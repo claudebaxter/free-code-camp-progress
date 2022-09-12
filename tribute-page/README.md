@@ -6,4 +6,4 @@ Loosely thrown together and easy to edit.
 
 The example page depicts Max Stirner, mostly as a joke.
 
-Download these files to a local directory and run index.html in your browser to view.
+To view this page, click <a href=https://elborracho420.github.io/free-code-camp-progress/tribute-page/index.html title="Test-Survey"> here.</a>
