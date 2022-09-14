@@ -1,0 +1,59 @@
+#navbar {
+    position: fixed;
+    width: 300px;
+    border-right: 5px dotted black;
+    padding-right
+  }
+  
+  header {
+    color: black;
+    text-align: center;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  
+  #navbar header {
+    border-bottom: 2px solid black;
+  }
+  
+  #main-doc header {
+    text-align: left;
+    margin: 0px;
+  }
+  
+  #navbar a {
+    display: block;
+    padding: 5px 0;
+    color: black;
+    text-transform: uppercase;
+    border-bottom: 2px solid black;
+  }
+  
+  #main-doc {
+    position: absolute;
+    margin-left: 285px;
+    padding: 50px;
+  }
+  
+  section li {
+    margin: 20px 0px 0px 20px;
+  }
+  
+  @media screen and (max-width: 500px) {
+    #navbar {
+    flex-direction: row;
+    width: 99%;
+    height: 20vh;
+    }
+  
+    #navbar {
+      position: absolute;
+    }
+  
+    #main-doc {
+      position: relative;
+      margin-left: 0px;
+      margin-top: 270px;
+    }
+  }
