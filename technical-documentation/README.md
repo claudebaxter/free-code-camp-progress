@@ -1,4 +1,4 @@
-#ntechnical-documentation
+#technical-documentation
 
 This is an example Technical Documentation page, using data from the Dark Coin Darkpaper.
 
