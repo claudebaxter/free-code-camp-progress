@@ -1,0 +1,129 @@
+/* reset browser styles opensource from https://zerotocode.today/ tutorial */
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1.2;
+}
+ol {
+  padding-left: 1.4em;
+  list-style: decimal;
+}
+ul {
+  padding-left: 1.4em;
+  list-style: square;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+/* end reset browser styles from https://zerotocode.today/ open source tutorial
+I prefer resetting brower defaults to avoid issues across various devices/browsers*/
+
+html {
+  background-color: black;
+  color: white;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  margin: 20px auto;
+  height: 100%;
+  width: 100%;
+}
+header {
+  position: fixed;
+  display: flex;
+  top: 0;
+  align-items: center;
+  background-color: grey;
+  height: 110px;
+  width: 100%;
+  border-bottom: 1px solid white;
+}
+#header-img {
+  height: 75px;
+  width: 75px;
+  margin: 10px;
+}
+#header-h1 {
+  white-space: nowrap;
+}
+#nav-bar {
+  padding: 8px;
+  background-color: black;
+  border-radius: 7px;
+  border: 2px solid white;
+  margin: 65px auto;
+  white-space: nowrap;
+}
+.nav-link {
+  border-left: 2px solid white;
+  padding: 0 35px;
+}
+a:link {
+  font-family: Arial, sans-serif;
+  color: white;
+  text-decoration: underline;
+}
+a:hover {
+  color: pink;
+  text-decoration: bold;
+}
+a:visited {
+  color: green;
+  text-decoration: underline;
+}
+
+main {
+  align-items: center;
+  margin: 120px auto 0 auto;
+  padding: 0 0 400px 0;
+  height: 110%;
+  width: 90%;
+  border: 2px solid white;
+}
+
+main h1 {
+  font-family: Arial, sans-serif;
+  margin: 10px auto;
+  text-align: center;
+  width: 140px;
+  text-transform: uppercase;
+}
+
+main p {
+  font-family: Helvetica;
+  margin: 10px auto;
+  text-align: center;
+  width: 239px;
+}
+#contact {
+  margin: 20px auto;
+  heightL 25px;
+  width: 400px;
+}
+#dao {
+  margin: 100px auto;
+}
+#dapp {
+  margin: 50px auto;
+  width: 280px;
+  height: 157.5px;
+}
+@media only screen and (min-width: 600px) {
+  body {
+    overflow: auto;
+  }
+}
