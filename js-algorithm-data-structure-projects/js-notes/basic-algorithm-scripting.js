@@ -350,3 +350,85 @@ function repeatStringNumTimes(str, num) {
 
 //--------------------------------------------------------------
 
+/*Truncate a String
+Truncate a string (first argument) if it is longer than the given 
+maximum string length (second argument). Return the truncated string 
+with a ... ending.*/
+
+function truncateString(str, num) {
+  return str;
+}
+
+truncateString("A-tisket a-tasket A green and yellow basket", 8);
+
+//SOLUTION:
+
+function truncateString(str, num) {
+  let shorten = "";
+  if (str.length > num) {
+    return str.slice(0, num) + "...";
+  } else {
+  return str;
+  }
+}
+
+truncateString("A-tisket a-tasket A green and yellow basket", 8);
+
+//alt sol 1:
+function truncateString(str, num) {
+  return str.length > num ? str.slice(0, num) + "..." : str;
+}
+
+//--------------------------------------------------------
+
+/*Finders Keepers
+Create a function that looks through an array arr and returns the 
+first element in it that passes a 'truth test'. This means that given 
+an element x, the 'truth test' is passed if func(x) is true. If no 
+element passes the test, return undefined.*/
+
+function findElement(arr, func) {
+  let num = 0;
+  return num;
+}
+
+findElement([1, 2, 3, 4], num => num % 2 === 0);
+
+//SOLUTION:
+
+function findElement(arr, func) {
+  let num = 0;
+  for (let i = 0; i < arr.length; i++) {
+    num = arr[i];
+    if (func(num)) {
+      return num;
+    }
+  }
+  return undefined;
+}
+
+findElement([1, 2, 3, 4], num => num % 2 === 0);
+
+//alt sol 1:
+
+function findElement(arr, func) {
+  return arr.find(func);
+}
+
+//alt sol 2:
+
+function findElement(arr, func) {
+  return arr[arr.map(func).indexOf(true)];
+}
+
+//alt sol 3:
+
+function findElement(arr, func) {
+  if (arr.length > 0 && !func(arr[0])) {
+    return findElement(arr.slice(1), func);
+  } else {
+    return arr[0];
+  }
+}
+
+//-------------------------------------------------------------
