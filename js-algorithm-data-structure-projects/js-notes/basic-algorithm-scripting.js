@@ -544,3 +544,235 @@ function frankenSplice(arr1, arr2, n) {
 }
 
 //-------------------------------------------------------------------------
+
+/*Falsy Bouncer
+Remove all falsy values from an array. Return a new array; do not mutate the original array.
+
+Falsy values in JavaScript are false, null, 0, "", undefined, and NaN.
+
+Hint: Try converting each value to a Boolean.*/
+
+function bouncer(arr) {
+  return arr;
+}
+
+bouncer([7, "ate", "", false, 9]);
+
+//SOLUTION:
+
+function bouncer(arr) {
+  let newArray = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i]) newArray.push(arr[i]);
+  }
+  return newArray;
+}
+
+bouncer([7, "ate", "", false, 9]);
+
+//ALT SOL 1:
+
+function bouncer(arr) {
+  return arr.filter(Boolean);
+}
+
+//--------------------------------------------------------------------------
+
+/*Where do I Belong
+Return the lowest index at which a value (second argument) should be inserted 
+into an array (first argument) once it has been sorted. The returned value should 
+be a number.
+
+For example, getIndexToIns([1,2,3,4], 1.5) should return 1 because it is greater 
+than 1 (index 0), but less than 2 (index 1).
+
+Likewise, getIndexToIns([20,3,5], 19) should return 2 because once the array has 
+been sorted it will look like [3,5,20] and 19 is less than 20 (index 2) and greater 
+than 5 (index 1).*/
+
+function getIndexToIns(arr, num) {
+  return num;
+}
+
+getIndexToIns([40, 60], 50);
+
+//SOLUTION:
+function getIndexToIns(arr, num) {
+  arr.sort((a, b) => a - b);
+
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] >= num)
+    return i;
+  }
+  return arr.length;
+}
+
+getIndexToIns([40, 60], 50);
+
+//ALT SOL 1:
+
+function getIndexToIns(arr, num) {
+  return arr.filter(val => num > val).length;
+}
+
+//ALT SOL 2:
+
+function getIndexToIns(arr, num) {
+  // sort and find right index
+  let index = arr
+    .sort((curr, next) => curr - next)
+    .findIndex(currNum => num <= currNum);
+  // Returns index or total length of arr
+  return index === -1 ? arr.length : index;
+}
+
+getIndexToIns([40, 60], 500);
+
+//ALT SOL 3:
+
+function getIndexToIns(arr, num) {
+  return arr
+    .concat(num)
+    .sort((a, b) => a - b)
+    .indexOf(num);
+}
+
+getIndexToIns([1, 3, 4], 2);
+
+//-----------------------------------------------------------------------------
+
+/*Mutations
+Return true if the string in the first element of the array contains all of the letters 
+of the string in the second element of the array.
+
+For example, ["hello", "Hello"], should return true because all of the letters in the 
+second string are present in the first, ignoring case.
+
+The arguments ["hello", "hey"] should return false because the string hello does not 
+contain a y.
+
+Lastly, ["Alien", "line"], should return true because all of the letters in line are 
+present in Alien.*/
+
+function mutation(arr) {
+  return arr;
+}
+
+mutation(["hello", "hey"]);
+
+//SOLUTION:
+
+function mutation(arr) {
+  let test = arr[1].toLowerCase();
+  let target = arr[0].toLowerCase();
+  for (let i = 0; i < test.length; i++) {
+    if (target.indexOf(test[i]) < 0) return false;
+  }
+  return true;
+}
+
+mutation(["hello", "hey"]);
+
+//DECLARATIVE SOLUTION:
+
+function mutation(arr) {
+  return arr[1]
+    .toLowerCase()
+    .split("")
+    .every(function(letter) {
+      return arr[0].toLowerCase().indexOf(letter) !== -1;
+    });
+}
+
+//RECURSIVE SOLUTION:
+
+function mutation([ target, test ], i = 0) {
+  target = target.toLowerCase();
+  test = test.toLowerCase();
+  return i >= test.length
+    ? true
+    : !target.includes(test[i])
+      ? false
+      : mutation([ target, test ], i + 1);
+}
+
+//---------------------------------------------------------------------------------
+
+/*Chunky Monkey
+Write a function that splits an array (first argument) into groups the length of size 
+(second argument) and returns them as a two-dimensional array.*/
+
+function chunkArrayInGroups(arr, size) {
+  return arr;
+}
+
+chunkArrayInGroups(["a", "b", "c", "d"], 2);
+
+//SOLUTION:
+
+function chunkArrayInGroups(arr, size) {
+  let temp = [];
+  let result = [];
+
+  for (let a = 0; a < arr.length; a++) {
+    if (a % size !== size - 1) temp.push(arr[a]);
+    else {
+      temp.push(arr[a]);
+      result.push(temp);
+      temp = [];
+    }
+  }
+
+  if (temp.length !== 0) result.push(temp);
+  return result;
+}
+
+chunkArrayInGroups(["a", "b", "c", "d"], 2);
+
+//ALT SOL 1:
+
+function chunkArrayInGroups(arr, size) {
+  // Break it up.
+  let newArr = [];
+  for (let i = 0; i < arr.length; i += size) {
+    newArr.push(arr.slice(i, i + size));
+  }
+  return newArr;
+}
+
+//ALT SOL 2:
+
+function chunkArrayInGroups(arr, size) {
+  // Break it up.
+  let newArr = [];
+  let i = 0;
+
+  while (i < arr.length) {
+    newArr.push(arr.slice(i, i + size));
+    i += size;
+  }
+  return newArr;
+}
+chunkArrayInGroups(["a", "b", "c", "d"], 2);
+
+//ALT SOL 3:
+
+function chunkArrayInGroups(arr, size) {
+  let newArr = [];
+  while (arr.length > 0) {
+    newArr.push(arr.splice(0, size));
+  }
+  return newArr;
+}
+
+//ALT SOL 4:
+
+function chunkArrayInGroups(arr, size) {
+  if (arr.length <= size) {
+    return [arr];
+  } else {
+    return [arr.slice(0, size)].concat(
+      chunkArrayInGroups(arr.slice(size), size)
+    );
+  }
+}
