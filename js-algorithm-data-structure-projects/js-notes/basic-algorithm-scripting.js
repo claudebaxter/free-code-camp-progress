@@ -432,3 +432,115 @@ function findElement(arr, func) {
 }
 
 //-------------------------------------------------------------
+
+/*Boo who
+Check if a value is classified as a boolean primitive. Return true 
+or false.
+
+Boolean primitives are true and false.*/
+
+function booWho(bool) {
+  return bool;
+}
+
+booWho(null);
+
+//SOLUTION:
+
+function booWho(bool) {
+  return typeof bool === "boolean";
+}
+
+console.log(booWho(null));
+
+//you don't need to console.log here I was testing something and forgot to change this back to the example
+
+//-------------------------------------------------------------------
+
+/*Title Case a Sentence
+Return the provided string with the first letter of each word capitalized. 
+Make sure the rest of the word is in lower case.
+
+For the purpose of this exercise, you should also capitalize connecting 
+words like the and of.*/
+
+function titleCase(str) {
+  return str;
+}
+
+titleCase("I'm a little tea pot");
+
+//SOLUTION:
+
+function titleCase(str) {
+  const newTitle = str.split(" ");
+  const updatedTitle = [];
+  for (let st in newTitle) {
+    updatedTitle[st] = newTitle[st][0].toUpperCase() + newTitle[st].slice(1).toLowerCase();
+  }
+  return updatedTitle.join(" ");
+}
+
+//ALT SOL 1:
+
+function titleCase(str) {
+  return str
+    .toLowerCase()
+    .split(" ")
+    .map(val => val.replace(val.charAt(0), val.charAt(0).toUpperCase()))
+    .join(" ");
+}
+
+titleCase("I'm a little tea pot");
+
+//ALT SOL 2:
+
+function titleCase(str) {
+  return str
+    .toLowerCase()
+    .replace(/(^|\s)\S/g, L => L.toUpperCase());
+}
+
+//------------------------------------------------------------------------
+
+/*Slice and Splice
+You are given two arrays and an index.
+
+Copy each element of the first array into the second array, in order.
+
+Begin inserting elements at index n of the second array.
+
+Return the resulting array. The input arrays should remain the same after the function runs.*/
+
+function frankenSplice(arr1, arr2, n) {
+  return arr2;
+}
+
+frankenSplice([1, 2, 3], [4, 5, 6], 1);
+
+//SOLUTION:
+
+function frankenSplice(arr1, arr2, n) {
+  let localArray = arr2.slice();
+  for (let i = 0; i < arr1.length; i++) {
+    localArray.splice(n, 0, arr1[i]);
+    n++
+  }
+  return localArray;
+}
+
+//ALT SOL 1:
+
+function frankenSplice(arr1, arr2, n) {
+  let localArr = arr2.slice();
+  localArr.splice(n, 0, ...arr1);
+  return localArr;
+}
+
+//ALT SOL 2:
+
+function frankenSplice(arr1, arr2, n) {
+  return [...arr2.slice(0, n), ...arr1, ...arr2.slice(n)];
+}
+
+//-------------------------------------------------------------------------
