@@ -24,4 +24,4 @@ palindrome("eye");
 
 /* how to match the opposite of alphanumerics (non alphanumerics)
    [\W] is short for [^A-Za-z0-9_]
-   note this is a capital W 
+   note this is a capital W */
