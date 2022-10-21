@@ -1,5 +1,4 @@
 function palindrome(str) {
-  let arr = [];
   let newStr = str.toLowerCase().replace(/[,\.\s]+/gi, '');
 
   let reverseStr = Array.prototype.map.call(newStr, function(x) {
