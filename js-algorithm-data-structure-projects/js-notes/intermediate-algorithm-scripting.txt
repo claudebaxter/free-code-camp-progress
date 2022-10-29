@@ -120,3 +120,78 @@ function diffArray(arr1, arr2) {
 }
 
 //-----------------------------------------------------------------------------
+
+/*Seek and Destroy
+You will be provided with an initial array (the first argument in the destroyer function), followed by one or more arguments. Remove all elements from the initial array that are of the same value as these arguments.
+
+Note: You have to use the arguments object.*/
+
+function destroyer(arr) {
+  return arr;
+}
+
+destroyer([1, 2, 3, 1, 2, 3], 2, 3);
+
+//SOLUTION:
+
+function destroyer(arr) {
+  const valsToRemove = Object.values(arguments).slice(1);
+  const filteredArray = [];
+
+  for (let i = 0; i < arr.length; i++) {
+    let removeElement = false;
+    for (let j = 0; j < valsToRemove.length; j++) {
+      if (arr[i] === valsToRemove[j]) {
+        removeElement = true;
+      }
+    }
+    if (!removeElement) {
+      filteredArray.push(arr[i]);
+    }
+  }
+  return filteredArray;
+}
+
+destroyer([1, 2, 3, 1, 2, 3], 2, 3);
+
+/*create an array of valsToRemove using Object.values(arguments.slice(1) and store
+it in the variable valsToRemove (will check against arr)
+
+Start a basic for loop iterate through arr, nest another for loop inside the first
+changing the integer variable j and arr to valsToRemove. This second loop will
+iterate through valsToRemove.
+ 
+Within the 2nd loop create an if statement checking strictly === that the current
+value of arr[i] is equal to valsToRemove[j].
+
+If the value at the current index is equal to both arrays, let removeElement to true remove it from arr.
+
+If the value is not flagged for removal, add it to the filteredArray.
+
+Outside of the nested loops, return the filteredArray.*.
+
+//ALT SOL 1:
+
+function destroyer(arr) {
+  /*declare valsToRemove that equals a new array object from() the arguments
+  passed into the function, use slice() on the array starting from the second
+  index, 1.*/
+  const valsToRemove = Array.from(arguments).slice(1);
+  /*return filtered array using includes() in the callback function to check if val
+  is not in valsToRemove; returning true to keep the value in original array or
+  false to remove it.*/
+  return arr.filter(function(val) {
+    return !valsToRemove.includes(val);
+  });
+}
+
+//ALT SOL 2:
+
+//using spread operator to retrieve arguments
+function destroyer(arr, ...valsToRemove) {
+//return the filtered array using includes()
+  return arr.filter(elem => !valsToRemove.includes(elem));
+}
+
+//------------------------------------------------------------------------------
+
