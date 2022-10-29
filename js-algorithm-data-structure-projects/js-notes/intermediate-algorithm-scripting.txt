@@ -303,3 +303,58 @@ reduce the mapped boolean values to a single boolean that indicates whether all
 This single boolean will be used to filter through the collection.
 
 //----------------------------------------------------------------------------
+
+/*Spinal Tap Case
+Convert a string to spinal case. Spinal case is all-lowercase-words-joined-by-dashes.*/
+
+function spinalCase(str) {
+  return str;
+}
+
+spinalCase('This Is Spinal Tap');
+
+//SOLUTION:
+
+function spinalCase(str) {
+  return str
+    .split(/\s|_|(?=[A-Z])/) //regex splits the string at the following conditions: a whitespace character [\s], an underscore character [_], or is followed by an uppercase letter (?=[A-Z])
+    .join("-")
+    .toLowerCase();
+}
+
+console.log(spinalCase('This Is Spinal Tap'));
+console.log(spinalCase('thisIsSpinalTap'));
+console.log(spinalCase('AllThe-small Things'));
+
+//ALT SOL:
+
+function spinalCase(str) {
+  // Replace low-upper case to low-space-uppercase
+  str = str.replace(/([a-z])([A-Z])/g, "$1 $2");
+  // Split on whitespace and underscores and join with dash
+  return str
+    .toLowerCase()
+    .split(/(?:_| )+/)
+    .join("-");
+}
+
+// test here
+spinalCase("This Is Spinal Tap");
+
+//ALT SOL 2:
+
+function spinalCase(str) {
+  // Create a variable for the white space and underscores.
+  var regex = /\s+|_+/g;
+
+  // Replace low-upper case to low-space-uppercase with a space (splits strings like thisIsSpinalTap to this Is Spinal Tap
+  str = str.replace(/([a-z])([A-Z])/g, "$1 $2");
+
+  // Replace space and underscore with -
+  return str.replace(regex, "-").toLowerCase();
+} //replaces removed items with hyphens (-) and converts to lowercase
+
+// test here
+spinalCase("This Is Spinal Tap");
+
+//-------------------------------------------------------------------------------
