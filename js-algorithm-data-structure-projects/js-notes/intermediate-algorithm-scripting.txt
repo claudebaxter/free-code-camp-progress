@@ -154,7 +154,7 @@ function destroyer(arr) {
 
 destroyer([1, 2, 3, 1, 2, 3], 2, 3);
 
-/*create an array of valsToRemove using Object.values(arguments.slice(1) and store
+/*create an array of valsToRemove using Object.values(arguments).slice(1) and store
 it in the variable valsToRemove (will check against arr)
 
 Start a basic for loop iterate through arr, nest another for loop inside the first
@@ -164,7 +164,8 @@ iterate through valsToRemove.
 Within the 2nd loop create an if statement checking strictly === that the current
 value of arr[i] is equal to valsToRemove[j].
 
-If the value at the current index is equal to both arrays, let removeElement to true remove it from arr.
+If the value at the current index is equal to both arrays, let removeElement to true 
+remove it from arr.
 
 If the value is not flagged for removal, add it to the filteredArray.
 
@@ -195,3 +196,110 @@ function destroyer(arr, ...valsToRemove) {
 
 //------------------------------------------------------------------------------
 
+/*Wherefore art thou
+Make a function that looks through an array of objects (first argument) and returns an array of all objects that have matching name and value pairs (second argument). Each name and value pair of the source object has to be present in the object from the collection if it is to be included in the returned array.
+
+For example, if the first argument is [{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], and the second argument is { last: "Capulet" }, then you must return the third object from the array (the first argument), because it contains the name and its value, that was passed on as the second argument.*/
+
+function whatIsInAName(collection, source) {
+  const arr = [];
+  // Only change code below this line
+
+
+  // Only change code above this line
+  return arr;
+}
+
+whatIsInAName([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" });
+
+//SOLUTION:
+
+function whatIsInAName(collection, source) {
+  const arr = []; //This doesn't appear to be necessary to solve the problem
+  // Only change code below this line
+  const sourceKeys = Object.keys(source);
+
+  return collection.filter (obj => {
+    for (let i = 0; i < sourceKeys.length; i++) {
+      if (!obj.hasOwnProperty(sourceKeys[i]) || 
+        obj[sourceKeys[i]] !== source[sourceKeys[i]]) {
+          return false;
+      }
+    }
+    return true;
+  });  
+    
+
+  // Only change code above this line
+  return arr; //this also doesn't appear to be necessary to solve the problem
+}
+
+whatIsInAName([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" });
+
+/* filter through array using .filter()
+use a for loop to loop through each item in the object
+use a if statement to check if the object in the collection doesn't 
+	have the key and the property value doesn't match the value in source
+return false if above if statement is correct otherwise return true*/
+
+//ALT SOL:
+
+function whatIsInAName(collection, source) {
+  // "What's in a name? that which we call a rose
+  // By any other name would smell as sweet.”
+  // -- by William Shakespeare, Romeo and Juliet
+  const sourceKeys = Object.keys(source);
+
+  return collection
+    .filter(obj => sourceKeys
+                     .every(key => obj.hasOwnProperty(key) &&
+                            obj[key] === source[key]));
+}
+
+// test here
+whatIsInAName(
+  [
+    { first: "Romeo", last: "Montague" },
+    { first: "Mercutio", last: null },
+    { first: "Tybalt", last: "Capulet" }
+  ],
+  { last: "Capulet" }
+);
+
+/*filter through collection with .filter()
+return a boolean value for the .filter() method
+reduce to boolean value to be returned for the .every() method*/
+
+//ALT SOL 2:
+
+function whatIsInAName(collection, source) {
+  // "What's in a name? that which we call a rose
+  // By any other name would smell as sweet.”
+  // -- by William Shakespeare, Romeo and Juliet
+  const souceKeys = Object.keys(source);
+
+  // filter the collection
+  return collection.filter(obj => souceKeys
+      .map(key => obj.hasOwnProperty(key) && obj[key] === source[key])
+      .reduce((a, b) => a && b));
+}
+
+// test here
+whatIsInAName(
+  [
+    { first: "Romeo", last: "Montague" },
+    { first: "Mercutio", last: null },
+    { first: "Tybalt", last: "Capulet" }
+  ],
+  { last: "Capulet" }
+);
+
+/*filter through collection using Array.filter()
+map through all keys and return boolean values based on the check conditions:
+	both the key and it's corresponding value must exist within the object we
+	are filtering through.
+reduce the mapped boolean values to a single boolean that indicates whether all
+	srcKeys pass the conditions checked above.
+This single boolean will be used to filter through the collection.
+
+//----------------------------------------------------------------------------
