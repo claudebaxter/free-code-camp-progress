@@ -1,22 +1,20 @@
-//a "REAL" roman numeral converter 
-
-function convertToRoman(int) {
+function convertToRoman(num) {
   let romanNum = '';
 
-  romanNum +=  'T'.repeat(int / 5000);  int %= 5000;
-  romanNum +=  'M'.repeat(int / 1000);  int %= 1000; 
-  romanNum += 'CM'.repeat(int / 900);   int %= 900; 
-  romanNum +=  'D'.repeat(int / 500);   int %= 500;  
-  romanNum += 'CD'.repeat(int / 400);   int %= 400;
-  romanNum +=  'C'.repeat(int / 100);   int %= 100;
-  romanNum += 'XC'.repeat(int / 90);    int %= 90;
-  romanNum +=  'L'.repeat(int / 50);    int %= 50;
-  romanNum += 'XL'.repeat(int / 40);    int %= 40;
-  romanNum +=  'X'.repeat(int / 10);    int %= 10;
-  romanNum += 'IX'.repeat(int / 9);     int %= 9;
-  romanNum +=  'V'.repeat(int / 5);     int %= 5;
-  romanNum += 'IV'.repeat(int / 4);     int %= 4;
-  romanNum +=  'I'.repeat(int);
+  romanNum +=  'T'.repeat(num / 5000);  num %= 5000;
+  romanNum +=  'M'.repeat(num / 1000);  num %= 1000; 
+  romanNum += 'CM'.repeat(num / 900);   num %= 900; 
+  romanNum +=  'D'.repeat(num / 500);   num %= 500;  
+  romanNum += 'CD'.repeat(num / 400);   num %= 400;
+  romanNum +=  'C'.repeat(num / 100);   num %= 100;
+  romanNum += 'XC'.repeat(num / 90);    num %= 90;
+  romanNum +=  'L'.repeat(num / 50);    num %= 50;
+  romanNum += 'XL'.repeat(num / 40);    num %= 40;
+  romanNum +=  'X'.repeat(num / 10);    num %= 10;
+  romanNum += 'IX'.repeat(num / 9);     num %= 9;
+  romanNum +=  'V'.repeat(num / 5);     num %= 5;
+  romanNum += 'IV'.repeat(num / 4);     num %= 4;
+  romanNum +=  'I'.repeat(num);
 
   return romanNum;
 }
