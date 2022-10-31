@@ -1288,3 +1288,85 @@ dropElements([1, 2, 3, 4], function(n) {
 });
 
 //--------------------------------------------------------------------------------
+
+/*Steamroller
+Flatten a nested array. You must account for varying levels of nesting.*/
+
+function steamrollArray(arr) {
+  return arr;
+}
+
+steamrollArray([1, [2], [3, [[4]]]]);
+
+// arr.flat(Infinity); would solve this but against the rules
+
+//SOLUTION:
+
+function steamrollArray(arr) {
+  //create new empty array (flattenedArray)
+  const flattenedArray = [];
+  //loop over arr argument contents
+  for (let i = 0; i < arr.length; i++) {
+    if (Array.isArray(arr[i])) {
+      // recursively flatten entries that are arrays
+      // and push into flattenedArray
+      flattenedArray.push(...steamrollArray(arr[i]));
+    } else {
+      //copy contents that are not arrays
+      flattenedArray.push(arr[i]);
+    }
+  }
+  return flattenedArray;
+}
+
+console.log(steamrollArray([1, [2], [3, [[4]]]]));
+
+//ALT SOL:
+
+function steamrollArray(arr) {
+  const flat = [].concat(...arr);
+  return flat.some(Array.isArray) ? steamrollArray(flat) : flat;
+}
+
+steamrollArray([1, [2], [3, [[4]]]]);
+
+//ALT SOL 2:
+
+function steamrollArray(arr) {
+  return arr
+    .toString()
+    .replace(",,", ",") // "1,2,,3" => "1,2,3"
+    .split(",") // ['1','2','3']
+    .map(function(v) {
+      if (v == "[object Object]") {
+        // bring back empty objects
+        return {};
+      } else if (isNaN(v)) {
+        // if not a number (string)
+        return v;
+      } else {
+        return parseInt(v); // if a number in a string, convert it
+      }
+    });
+}
+
+//ALT SOL 3:
+
+function steamrollArray(val,flatArr=[]) {
+  val.forEach(item => {
+    if (Array.isArray(item)) steamrollArray(item, flatArr);
+    else flatArr.push(item);
+  });
+  return flatArr;
+}
+
+//ALT SOL 4:
+
+function steamrollArray(arr, flatArr = []) {
+  const elem = arr.pop();
+  return elem
+    ? !Array.isArray(elem)
+      ? steamrollArray(arr, [elem, ...flatArr])
+      : steamrollArray(arr.concat(elem), flatArr)
+    : flatArr;
+}
