@@ -1,60 +1,23 @@
-//this technically passes the test, but will make a legitimate roman numeral converter later:
+//a "REAL" roman numeral converter 
 
-function convertToRoman(num) {
- if (num === 2) {
-   return "II";
- } else if (num === 3) {
-   return "III";
- } else if (num === 4) {
-   return "IV";
- } else if (num === 5) {
-   return "V";
- } else if (num === 9) {
-   return "IX";
- } else if (num === 12) {
-   return "XII";
- } else if (num === 16) {
-   return "XVI";
- } else if (num === 29) {
-   return "XXIX";
- } else if (num === 44) {
-   return "XLIV";
- } else if (num === 45) {
-   return "XLV";
- } else if (num === 68) {
-   return "LXVIII";
- } else if (num === 83) {
-   return "LXXXIII";
- } else if (num === 97) {
-   return "XCVII";
- } else if (num === 99) {
-   return "XCIX";
- } else if (num === 400) {
-   return "CD";
- } else if (num === 500) {
-   return "D";
- } else if (num === 501) {
-   return "DI";
- } else if (num === 649) {
-   return "DCXLIX";
- } else if (num === 798) {
-   return "DCCXCVIII";
- } else if (num === 891) {
-   return "DCCCXCI";
- } else if (num === 1000) {
-   return "M";
- } else if (num === 1004) {
-   return "MIV";
- } else if (num === 1006) {
-   return "MVI";
- } else if (num === 1023) {
-   return "MXXIII";
- } else if (num === 2014) {
-   return "MMXIV";
- } else if (num === 3999) {
-   return "MMMCMXCIX";
- } else
- return null;
-};
+function convertToRoman(int) {
+  let romanNum = '';
 
-console.log(convertToRoman(5));
+  romanNum +=  'T'.repeat(int / 5000);  int %= 5000;
+  romanNum +=  'M'.repeat(int / 1000);  int %= 1000; 
+  romanNum += 'CM'.repeat(int / 900);   int %= 900; 
+  romanNum +=  'D'.repeat(int / 500);   int %= 500;  
+  romanNum += 'CD'.repeat(int / 400);   int %= 400;
+  romanNum +=  'C'.repeat(int / 100);   int %= 100;
+  romanNum += 'XC'.repeat(int / 90);    int %= 90;
+  romanNum +=  'L'.repeat(int / 50);    int %= 50;
+  romanNum += 'XL'.repeat(int / 40);    int %= 40;
+  romanNum +=  'X'.repeat(int / 10);    int %= 10;
+  romanNum += 'IX'.repeat(int / 9);     int %= 9;
+  romanNum +=  'V'.repeat(int / 5);     int %= 5;
+  romanNum += 'IV'.repeat(int / 4);     int %= 4;
+  romanNum +=  'I'.repeat(int);
+
+  return romanNum;
+}
+console.log(convertToRoman(5999));
