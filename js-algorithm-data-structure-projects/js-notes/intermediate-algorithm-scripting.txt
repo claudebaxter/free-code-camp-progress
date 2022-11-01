@@ -1512,3 +1512,84 @@ function truthCheck(collection, pre) {
 truthCheck([{ name: "Quincy", role: "Founder", isBot: false }, { name: "Naomi", role: "", isBot: false }, { name: "Camperbot", role: "Bot", isBot: true }], "isBot");
 
 //-----------------------------------------------------------------------------------
+
+/*Arguments Optional
+Create a function that sums two arguments together. If only one argument is provided, then return a function that expects one argument and returns the sum.
+
+For example, addTogether(2, 3) should return 5, and addTogether(2) should return a function.
+
+Calling this returned function with a single argument will then return the sum:*/
+
+var sumTwoAnd = addTogether(2);
+sumTwoAnd(3) returns 5.
+
+//If either argument isn't a valid number, return undefined.
+
+//SOLUTION:
+
+function addTogether() {
+  const [first, second] = arguments; //define expected args
+  if (typeof(first) !== "number")
+    return undefined; //If first arg isn't a number returns undefined
+  if (arguments.length === 1)
+    return (second) => addTogether(first, second); //If only one arg is entered, return a function that uses that number and expects another one, to then add to it
+  if (typeof(second) !== "number")
+    return undefined //returns undefined if 2nd arg isn't a number
+  return first + second; //pretty straight forward--returns the sum of both args
+}
+
+console.log(addTogether(2,3));
+
+//ALT SOL:
+
+function addTogether() {
+  const [first, second] = arguments;
+  // First argument is not a number
+  if (typeof(first) !== "number") {
+    return undefined;
+  }
+  // First argument is a number
+  //  and second argument is not defined
+  else if (arguments.length === 1) {
+    function addSecond(second) {
+      // New argument is not a number
+      if (typeof(second) !== "number") {
+        return undefined;
+      }
+      // New argument is a number
+      else {
+        return first + second;
+      }
+    }
+    // Note: returning a *function*
+    return addSecond;
+  }
+  // First argument is a number
+  //  and second argument is not a number
+  else if (typeof(second) !== "number") {
+    return undefined;
+  }
+  // First argument is a number
+  //  and second argument is a number
+  else {
+    return first + second;
+  }
+}
+
+//ALT SOL 2:
+
+function addTogether(...args) {
+  const [first, second] = args;
+  if (args.length === 1 && typeof first === 'number') {
+    return num => {
+      if (typeof num === 'number') {
+        return first + num;
+      }
+    }
+  }
+  if (typeof first === 'number' && typeof second === 'number') {
+    return first + second;
+  }
+}
+
+//--------------------------------------------------------------------------------------
