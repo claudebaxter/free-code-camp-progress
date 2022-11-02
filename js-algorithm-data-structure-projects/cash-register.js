@@ -1,21 +1,19 @@
 //global object currency to assing string / value pairs for cid array.
 const currency = {
-    "PENNY" : 0.01,
-    "NICKEL" : 0.05,
-    "DIME" : 0.10,
-    "QUARTER" : 0.25,
-    "ONE" : 1,
-    "FIVE" : 5,
-    "TEN" : 10,
-    "TWENTY" : 20,
-    "ONE HUNDRED" : 100
+    "PENNY" : 1,
+    "NICKEL" : 5,
+    "DIME" : 10,
+    "QUARTER" : 25,
+    "ONE" : 100,
+    "FIVE" : 500,
+    "TEN" : 1000,
+    "TWENTY" : 2000,
+    "ONE HUNDRED" : 10000
   };
 
 function checkCashRegister(price, cash, cid) {
   
-  //obviously, change = payment (cash) - price.
-  //the math can be a bit funny with decimals so be careful...
-  let changeDue = cash - price;
+  let changeDue = cash * 100 - price * 100;
   let changeDueCheck = changeDue;
   let change = [];
   let status = '';
@@ -25,7 +23,7 @@ function checkCashRegister(price, cash, cid) {
 
   cidCheck.forEach(elem => {
     let cur = elem[0];
-    let curTot = elem[1];
+    let curTot = elem[1] * 100;
     cidCount += curTot;
     let total = 0;
     while (changeDue >= currency[cur] && curTot > 0) {
@@ -33,7 +31,7 @@ function checkCashRegister(price, cash, cid) {
       changeDue -= currency[cur];
       curTot -= currency[cur];
     } if (total !== 0) {
-      change.push([cur, total]);
+      change.push([cur, total / 100]);
     }
   });
 
@@ -49,4 +47,4 @@ function checkCashRegister(price, cash, cid) {
   return { 'status': status, 'change': change };
 }
 
-console.log(checkCashRegister(19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]));
+console.log(checkCashRegister(3.26, 100, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]));
