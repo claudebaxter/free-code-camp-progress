@@ -124,6 +124,6 @@ main p {
 }
 @media only screen and (min-width: 600px) {
   body {
-    overflow: auto;
+    overflow-x: auto;
   }
 }
