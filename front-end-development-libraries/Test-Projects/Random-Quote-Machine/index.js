@@ -8,18 +8,9 @@ var currentQuote = '',
 to accept applciation/json from the url below. Upon success,
 a new function verifies if jsonQuotes is a string, if so
 parses the JSON data to create quotesData & log to console */
-
-/* Quotes are formatted as nested arrays as follows:
-{ "quotes": [
- {"quote":"You miss 100% of the shots you don’t take.", "author":"Wayne Gretzky"}, 
- {2...}, {3...} ]} etc. It fetches all the quotes (hence the s)*/
-
 function fetchQuotes() {
-  return $.ajax({
-    headers: {
-      Accept: 'application/json'
-    },
-    url: 'https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json',
+  return $.ajax({headers: {Accept: 'application/json'},
+    url: 'https://gist.githubusercontent.com/elborracho420/4f10059e72b69fa9c79415f8c9ab8c26/raw/15333259b757446f624e7cfee619775acc9e5bee/stoic-quotes.json',
     success: function (jsonQuotes) {
       if (typeof jsonQuotes === 'string') {
         quotesData = JSON.parse(jsonQuotes);
@@ -51,15 +42,18 @@ function fetchQuote() {
   currentQuote = randomQuote.quote;
   currentAuthor = randomQuote.author;
 
-  /* Using jQuery to select the #tweet-quote a element, and assign the remaining text
-  to the twitter URL that will pre-populate a tweet (if user is logged in to Twitter)
-  with a space, currentQuote, space, currentAuthor */
+  /* Function tweetCurrentQuote when called will open twitter in a new window
+  and pre-load a tweet prompt with the current quote and author.
+  
+  jQuery makes it easy to read function when #tweet-quote element is clicked. */
 
-  $('#tweet-quote').attr(
-    'href',
-    'https://twitter.com/intent/tweet?hashtags=quotes&text=' +
-      encodeURIComponent('"' + currentQuote + '" ' + currentAuthor)
-  );
+  function tweetCurrentQuote() {
+    window.open('https://twitter.com/intent/tweet?hashtags=AureliusQuotes&text=' +
+    encodeURIComponent('"' + currentQuote + '" ' + currentAuthor)
+    )
+};
+
+$('#tweet-quote').on('click', tweetCurrentQuote);
 
   /* Using jQuery to select the #text and #author elements and inserts the text / data
   from randomQuote.quote and randomQuote.author properties into the corresponding
