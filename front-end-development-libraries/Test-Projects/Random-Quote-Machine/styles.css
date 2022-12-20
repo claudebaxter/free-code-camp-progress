@@ -30,7 +30,7 @@ table {
 /* end reset browser styles */
 
 #wrapper {
-    position: absolute;
+ position: absolute;
  height: 100%;
  width: 100%;
  background-color: black;
@@ -46,8 +46,7 @@ table {
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%);
-  height: 300px;
-  width: 500px;
+  width: 600px;
   color: white;
 }
 
@@ -71,11 +70,28 @@ P {
 }
 
 #tweet-quote {
+    font-size: 1.25em;
+}
+
+#tweet-btn {
+    margin-right: 20px;
+}
+
+#new-quote {
     margin-left: 20px;
     font-size: 1.25em;
 }
 
-#new-quote {
-    margin-right: 20px;
-    font-size: 1.25em;
+footer {
+    position: absolute;
+    bottom: 50px;
+    width: 100%;
+    height: 50px;
+    background-color: black;
+    text-align: center;
+    color: white;
+}
+
+footer h1 {
+    font-size: 1em;
 }
