@@ -42,18 +42,15 @@ function fetchQuote() {
   currentQuote = randomQuote.quote;
   currentAuthor = randomQuote.author;
 
-  /* Function tweetCurrentQuote when called will open twitter in a new window
-  and pre-load a tweet prompt with the current quote and author.
-  
-  jQuery makes it easy to read function when #tweet-quote element is clicked. */
+  /* Using jQuery to select the #tweet-quote a element, and assign the remaining text
+  to the twitter URL that will pre-populate a tweet (if user is logged in to Twitter)
+  with a space, currentQuote, space, currentAuthor */
 
-  function tweetCurrentQuote() {
-    window.open('https://twitter.com/intent/tweet?hashtags=AureliusQuotes&text=' +
-    encodeURIComponent('"' + currentQuote + '" ' + currentAuthor)
-    )
-};
-
-$('#tweet-quote').on('click', tweetCurrentQuote);
+  $('#tweet-quote').attr(
+    'href',
+    'https://twitter.com/intent/tweet?hashtags=AureliusQuotes&text=' +
+      encodeURIComponent('"' + currentQuote + '" ' + currentAuthor)
+  );
 
   /* Using jQuery to select the #text and #author elements and inserts the text / data
   from randomQuote.quote and randomQuote.author properties into the corresponding
