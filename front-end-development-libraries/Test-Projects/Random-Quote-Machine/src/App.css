@@ -83,7 +83,7 @@ P {
     font-size: 1.25em;
 }
 
-footer {
+.footer {
     position: absolute;
     bottom: 25px;
     width: 100%;
@@ -93,6 +93,6 @@ footer {
     color: white;
 }
 
-footer h1 {
+.footer h1 {
     font-size: 1em;
 }
