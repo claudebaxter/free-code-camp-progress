@@ -3,7 +3,7 @@ import './App.css';
 
 var quotes = [
   {
-    "quote":"Waste no more time arguing what a good man should be. Be One.","author":"-Marcus Aurelius"},
+    "quote":"Waste no more time arguing what a good man should be. Be One.","author":"Marcus Aurelius"},
 {
     "quote":"Think of the life you have lived until now as over and, as a dead man, see what’s left as a bonus and live it according to Nature. Love the hand that fate deals you and play it as your own, for what could be more fitting?","author":"Marcus Aurelius"},
 {
@@ -64,7 +64,7 @@ render() {
                                 id="tweet-quote">Tweet Quote
                               </a>
                             </button>
-                            <button className="btn" id="new-quote" onclick={this.fetchQuote}>New Quote</button>
+                            <button className="btn" id="new-quote" onClick={this.fetchQuote}>New Quote</button>
                           </div>
                     </div>
                     <div className="footer">
