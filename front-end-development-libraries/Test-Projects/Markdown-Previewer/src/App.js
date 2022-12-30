@@ -49,6 +49,7 @@ class App extends React.Component {
   return (
     <div id="main-body">
       <div id="editor-wrap">
+        <h1>Editor:</h1>
         <textarea 
           id="editor" 
           value={this.state.markdown} 
@@ -58,6 +59,7 @@ class App extends React.Component {
         </textarea>
       </div>
       <div id="preview-wrap">
+        <h1>Previewer:</h1>
         <p id="preview"
         dangerouslySetInnerHTML={{
           __html: marked(this.state.markdown),

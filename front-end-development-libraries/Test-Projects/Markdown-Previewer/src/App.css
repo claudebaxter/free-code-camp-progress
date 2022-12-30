@@ -2,6 +2,7 @@
   display: block;
   height: 100%;
   width: 100%;
+  background-color: gray;
 }
 
 #editor-wrap {
@@ -11,12 +12,29 @@
   padding-bottom: 25px;
 }
 
+h1 {
+  font-family: Consolas;
+  display: block;
+  color: white;
+  margin: auto;
+  background-color: black;
+  border: 1px solid white;
+  border-radius: 15px;
+  padding: 3px;
+}
+
 #editor {
+  background-color: black;
+  padding: 10px;
+  color: white;
+  font-family: Consolas;
   margin: auto;
   display: block;
   height: 30vh;
-  width: 75%;
-  border: 3px solid black;
+  width: 38%;
+  border: 3px solid white;
+  border-radius: 15px;
+  box-shadow: 0 0 15px 5px rgba(211,211,211,2);
 }
 
 #preview-wrap {
@@ -27,16 +45,22 @@
 }
 
 #preview {
+  background-color: black;
+  color: red;
+  font-family: Consolas;
   margin: auto;
   display: block;
   min-height: 40vh;
   height: auto;
-  width: 85%;
-  border: 3px solid black;
+  width: 66%;
+  border: 3px solid white;
+  border-radius: 15px;
+  box-shadow: 0 0 15px 5px rgba(211,211,211,2);
   padding: auto;
 }
 
 #preview img {
   max-width: 75%;
   display: block;
+  filter: brightness(0) invert(1);
 }
