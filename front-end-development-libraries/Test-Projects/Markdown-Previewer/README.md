@@ -6,4 +6,4 @@ You can use this page to test your markdown before submitting it to make sure th
 
 This is still a work in progress so the link below does not work yet, and instead will take you to the Marcus Aurelius quote machine.
 
-To view the Markdown Previewer, click<a href=https://random-quote-generator-hazel.vercel.app/ title="Markdown Previewer"> here.</a>
+To view the Markdown Previewer, click<a href=https://markdown-previewer-green.vercel.app/ title="Markdown Previewer"> here.</a>

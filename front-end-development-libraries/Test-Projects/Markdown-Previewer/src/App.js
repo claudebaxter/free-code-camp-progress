@@ -2,36 +2,42 @@ import React from 'react';
 import './App.css';
 import { marked } from 'marked';
 
-const placeholder = `# Welcome to my React Markdown Previewer!
-## This is a sub-heading...
-### And here's some other cool stuff:
-Heres some code, \`<div></div>\`, between 2 backticks.
+const placeholder = `# This is a H1 heading element!
+## This is a H2 sub-heading element!
+### And an H3 sub-heading element!
+Don't forget [links](https://www.freecodecamp.org)
+Heres some in-line code, \`<div></div>\`, between 2 backticks.
 \`\`\`
-// this is multi-line code:
+// Here's some multi-line code:
 function anotherExample(firstLine, lastLine) {
   if (firstLine == '\`\`\`' && lastLine == '\`\`\`') {
     return multiLineCode;
   }
 }
 \`\`\`
-You can also make text **bold**... whoa!
-Or _italic_.
-Or... wait for it... **_both!_**
-And feel free to go crazy ~~crossing stuff out~~.
-There's also [links](https://www.freecodecamp.org), and
-> Block Quotes!
-And if you want to get really crazy, even tables:
-Wild Header | Crazy Header | Another Header?
+You can also make text **bold,**
+Or _italic,_
+Or... **_both!_**
+~~Here's some crossed out stuff~~.
+
+> Here are Block Quotes!
+
+You can also make tables:
+Header 1     | Header 2      | Header 3
 ------------ | ------------- | -------------
-Your content can | be here, and it | can be here....
-And here. | Okay. | I think we get it.
-- And of course there are lists.
-  - Some are bulleted.
+Your content | can be here   | or here.
+And here.    | Okay.         | I think we get it.
+
+- Here's a list example
+  - You can go further in
      - With different indentation levels.
         - That look like this.
-1. And there are numbered lists too.
-1. Use just 1s if you want!
-1. And last but not least, let's not forget embedded images:
+1. There's also numbered lists
+1. You can use just 1s if you want!
+1. The markdown will render the list as numbered anyway.
+
+Here's an embedded svg image: (I inverted the color)
+
 ![freeCodeCamp Logo](https://cdn.freecodecamp.org/testable-projects-fcc/images/fcc_secondary.svg)
 `;
 
