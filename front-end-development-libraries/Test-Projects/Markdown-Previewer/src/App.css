@@ -29,7 +29,9 @@
 #preview {
   margin: auto;
   display: block;
+  min-height: 40vh;
   height: auto;
   width: 85%;
   border: 3px solid black;
+  padding: auto;
 }

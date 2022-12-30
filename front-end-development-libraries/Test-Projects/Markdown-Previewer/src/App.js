@@ -19,8 +19,6 @@ class App extends React.Component {
         <textarea id="editor" value={this.state.markdown} onChange={(e) => {
           this.setMarkdown(e.target.value);
         }}>
-          {" "}
-          {console.log(this.state.markdown)}
         </textarea>
       </div>
       <div id="preview-wrap">
