@@ -35,3 +35,8 @@
   border: 3px solid black;
   padding: auto;
 }
+
+#preview img {
+  max-width: 75%;
+  display: block;
+}
