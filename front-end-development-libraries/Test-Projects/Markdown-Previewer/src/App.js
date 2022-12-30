@@ -1,56 +1,38 @@
 import React from 'react';
-import { Previewer } from './features/previewer/Previewer';
 import './App.css';
+import { marked } from 'marked';
 
-function App() {
+class App extends React.Component {
+  state = {
+    markdown: ''
+  };
+
+  setMarkdown(markdown) {
+    this.setState({ markdown });
+  }
+
+ render() { 
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <Previewer />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
+    <div id="main-body">
+      <div id="editor-wrap">
+        <textarea id="editor" value={this.state.markdown} onChange={(e) => {
+          this.setMarkdown(e.target.value);
+        }}>
+          {" "}
+          {console.log(this.state.markdown)}
+        </textarea>
+      </div>
+      <div id="preview-wrap">
+        <p id="preview"
+        dangerouslySetInnerHTML={{
+          __html: marked(this.state.markdown),
+        }}>
         </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+      </div>
     </div>
   );
+ }
 }
 
 export default App;
