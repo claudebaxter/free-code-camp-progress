@@ -43,7 +43,7 @@ class App extends Component{
 handleClick(event) {
   const log = event;
   console.log(log);
-  switch (event.currentTarget.childNotes[1].id) {
+  switch (event.currentTarget.childNodes[1].id) {
     case "Q":
       this.sounds.heater1.currentTime = 0;
       this.setState({ default: this.state.heater1 });
@@ -90,7 +90,7 @@ handleClick(event) {
       this.sounds.cevH2.play();
       break;
     default:
-      console.log("Nothing was played or somethingw went wrong.")
+      console.log("Nothing was played or something went wrong.")
       break;
   }
 
@@ -150,6 +150,12 @@ handleKeys(keyCode) {
   }
 }
 
+handleNameChange(event) {
+  this.setState({
+    name: event.currentTarget.value
+  });
+}
+
 render() {
   return (
     <div id="drum-machine">
@@ -157,13 +163,14 @@ render() {
         tabIndex={-1}
         onKeyDown={event => this.handleKeys(event.keyCode)}
       >
+        <p value={this.state.name}></p>
         <div id="pad-container">
-        <div id="drum-pad-1" className="drum-pad" onClick={e => this.handleClick(e)}>
+        <div id="drum-pad-1" className="drum-pad" onClick={event => this.handleClick(event)}>
           Q
           <audio className="clip" id="Q" src={Heater_1}></audio>
         </div>
         <div id="drum-pad-2" className="drum-pad" onClick={e => this.handleClick(e)}>
-          W
+        W
           <audio className="clip" id="W" src={Heater_2}></audio>
         </div>
         <div id="drum-pad-3" className="drum-pad" onClick={e => this.handleClick(e)}>
