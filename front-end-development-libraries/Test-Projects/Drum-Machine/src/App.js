@@ -1,4 +1,3 @@
-import { render } from '@testing-library/react';
 import React from 'react';
 import './App.css';
 
@@ -99,19 +98,19 @@ const soundGroupTwo = [{
 
 const DrumBoardKey = ({ play, sound: { key, url, keyCode, id } }) => {
   
-    const handleKeydown = (event) => {
+    const handleKeyPress = (event) => {
       if (event.keyCode === keyCode) {
       play(key)
       }
     }
 
     React.useEffect(() => {
-      document.addEventListener("keydown", handleKeydown)
+      document.addEventListener("keydown", handleKeyPress)
     }, [])
     
     return (
-    <button id={id} className="drum-pad" onClick={() => play(key)}>
-      <audio className="clip" id={key} src={url} />
+    <button id={ id } className="drum-pad" onClick={() => play(key)}>
+      <audio className="audio" id={key} src={url} />
       <span>{key}</span>
     </button>
   )
@@ -122,19 +121,13 @@ const DrumBoard = ({ play }) => {
 }
 
 const SampleName = ({ id }) => {
-  return (
-    <span className="test">{id}</span>
-  )
+  document.getElementById('sample').innerText = {id}
 }
 
 class App extends React.Component {
   state = {
     sampleName: SampleName
   };
-
-  setSamplename(sampleName) {
-    this.setState({ sampleName });
-  }
 
   render() {
 
@@ -146,12 +139,7 @@ class App extends React.Component {
 
   return (
     <div id="drum-machine">
-      <div id="display" 
-      value={this.state.sampleName}
-      onChange={(e) => {
-        this.setSamplename(e.target.value);
-      }}>
-        <SampleName />
+      <div id="display"> <p id="sample">Sample: {this.state.sampleName}</p>
         <DrumBoard play={play} />
       </div>
     </div>

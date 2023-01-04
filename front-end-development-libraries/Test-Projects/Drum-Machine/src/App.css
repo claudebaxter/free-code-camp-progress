@@ -69,3 +69,7 @@ table {
   margin: auto;
   margin-bottom: 37px;
 }
+
+.sample {
+  position: relative;
+}
