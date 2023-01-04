@@ -110,7 +110,7 @@ const DrumBoardKey = ({ play, sound: { key, url, keyCode, id } }) => {
     
     return (
     <button id={ id } className="drum-pad" onClick={() => play(key)}>
-      <audio className="audio" id={key} src={url} />
+      <audio className="clip" id={key} src={url} />
       <span>{key}</span>
     </button>
   )
