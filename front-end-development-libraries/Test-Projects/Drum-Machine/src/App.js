@@ -1,3 +1,4 @@
+import { render } from '@testing-library/react';
 import React from 'react';
 import './App.css';
 
@@ -120,21 +121,42 @@ const DrumBoard = ({ play }) => {
   return soundGroupOne.map((sound) => <DrumBoardKey play={play} sound={sound} />)
 }
 
-const App = () => {
+const SampleName = ({ id }) => {
+  return (
+    <span className="test">{id}</span>
+  )
+}
 
-  const play = (key) => {
-    const audio = document.getElementById(key)
-    audio.currentTime = 0;
-    audio.play()
+class App extends React.Component {
+  state = {
+    sampleName: SampleName
+  };
+
+  setSamplename(sampleName) {
+    this.setState({ sampleName });
   }
+
+  render() {
+
+    const play = (key) => {
+      const audio = document.getElementById(key)
+      audio.currentTime = 0;
+      audio.play()
+    }
 
   return (
     <div id="drum-machine">
-      <div id="display">
+      <div id="display" 
+      value={this.state.sampleName}
+      onChange={(e) => {
+        this.setSamplename(e.target.value);
+      }}>
+        <SampleName />
         <DrumBoard play={play} />
       </div>
     </div>
   );
+}
 }
 
 export default App;
