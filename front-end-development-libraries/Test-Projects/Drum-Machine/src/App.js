@@ -1,3 +1,4 @@
+import React from 'react';
 import './App.css';
 
 const soundGroupOne = [{
@@ -95,11 +96,22 @@ const soundGroupTwo = [{
   url: 'https://s3.amazonaws.com/freecodecamp/drums/Brk_Snr.mp3'
 }];
 
-const DrumBoardKey = ({ play, sound: { key, url, id } }) => {
-  return (
+const DrumBoardKey = ({ play, sound: { key, url, keyCode, id } }) => {
+  
+    const handleKeydown = (event) => {
+      if (event.keyCode === keyCode) {
+      play(key)
+      }
+    }
+
+    React.useEffect(() => {
+      document.addEventListener("keydown", handleKeydown)
+    }, [])
+    
+    return (
     <button id={id} className="drum-pad" onClick={() => play(key)}>
       <audio className="clip" id={key} src={url} />
-      {key}
+      <span>{key}</span>
     </button>
   )
 }
