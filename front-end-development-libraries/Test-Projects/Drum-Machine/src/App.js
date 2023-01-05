@@ -120,14 +120,17 @@ const DrumBoard = ({ play }) => {
   return soundGroupOne.map((sound) => <DrumBoardKey play={play} sound={sound} />)
 }
 
-const SampleName = ({ id }) => {
-  document.getElementById('sample').innerText = {id}
+const sampleName = ({ id, sample }) => {
+
+  sampleName = {id}
+
+  document.getElementById('sample').innerText = sample;
 }
 
 class App extends React.Component {
-  state = {
-    sampleName: SampleName
-  };
+  this.state={
+    sampleName: null
+  }
 
   render() {
 
@@ -139,7 +142,7 @@ class App extends React.Component {
 
   return (
     <div id="drum-machine">
-      <div id="display"> <p id="sample">Sample: {this.state.sampleName}</p>
+      <div id="displayBox"> <p id="display">Sample: {this.state.sampleName}</p>
         <DrumBoard play={play} />
       </div>
     </div>
