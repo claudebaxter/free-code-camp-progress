@@ -34,17 +34,26 @@ table {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-color: azure;
 }
 
 #displayBox {
   background-color: gray;
   border: 5px solid #000;
   border-radius: 15px;
-  height: 420px;
+  height: 400px;
   position: relative;
   text-align: center;
   width: 450px;
   padding-top: 55px;
+}
+
+#display {
+  color: purple;
+  font-family: Consolas;
+  font-weight: 900;
+  padding-bottom: 10px;
+  font-size: 1.5em;
 }
 
 #pad-container {
