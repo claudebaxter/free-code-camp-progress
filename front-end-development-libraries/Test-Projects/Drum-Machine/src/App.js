@@ -100,7 +100,7 @@ const DrumBoardKey = ({ play, sound: { key, url, keyCode, id } }) => {
   
     const handleKeyPress = (event) => {
       if (event.keyCode === keyCode) {
-      play(key)
+      play(key, id)
       }
     }
 
@@ -109,7 +109,7 @@ const DrumBoardKey = ({ play, sound: { key, url, keyCode, id } }) => {
     }, [])
     
     return (
-    <button id={ id } className="drum-pad" onClick={() => play(key)}>
+    <button id={ id } className="drum-pad" onClick={() => play(key, id)}>
       <audio className="clip" id={key} src={url} />
       <span>{key}</span>
     </button>
@@ -120,24 +120,21 @@ const DrumBoard = ({ play }) => {
   return soundGroupOne.map((sound) => <DrumBoardKey play={play} sound={sound} />)
 }
 
-const sampleName = ({ id, sample }) => {
-
-  sampleName = {id}
-
-  document.getElementById('sample').innerText = sample;
-}
-
 class App extends React.Component {
-  this.state={
-    sampleName: null
+  constructor(props) {
+    super(props);
+    this.state = {
+      sampleName: null
+    }
   }
 
   render() {
 
-    const play = (key) => {
+    const play = (key, id) => {
       const audio = document.getElementById(key)
       audio.currentTime = 0;
       audio.play()
+      this.setState({ sampleName: id });
     }
 
   return (
