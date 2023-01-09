@@ -1,1 +1,56 @@
+body {
+  background-color: black;
+}
 
+.Calculator {
+  display: grid;
+  align-items: center;
+  position: relative;
+  height: 80vh;
+  width: 40vh;
+  background-color: black;
+  border: 5px solid white;
+  box-shadow: 0 0 15px 5px rgba(211,211,211,2);
+  border-radius: 15px;
+  margin: auto;
+  padding: 15px;
+}
+
+#display {
+  display: flex;
+  font-family: consolas;
+  height: 80%;
+  color: red;
+  border-radius: 15px;
+  border: 2px solid white;
+  align-items: center;
+  justify-content: right;
+  font-size: 2em;
+  padding-right: 17px;
+}
+
+#operator-pad {
+  display: inline-block;
+  margin-bottom: -40px;
+  position: relative;
+  border-top: 30px dotted hotpink;
+  padding-top: 50px;
+}
+
+#number-pad {
+  display: inline-block;
+  position: relative;
+  margin-bottom: -30px;
+}
+
+.button {
+    display: inline-block;
+    background-color: black;
+    color: red;
+    height: 5.6em;
+    width: 5.6em;
+    border: 3px solid red;
+    margin: 0.35px;
+    border-radius: 15px;
+    font-weight: 900;
+}
