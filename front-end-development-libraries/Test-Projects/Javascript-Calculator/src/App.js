@@ -8,6 +8,27 @@ const App = () => {
   const [count, setCount] = useState(null);
   const [countTwo, setCountTwo] = useState("0");
   const [operator, setOperator] = useState(null);
+  const [numberButtons] = useState([
+    { name: "zero", id: 0 },
+    { name: "one", id: 1 },
+    { name: "two", id: 2 },
+    { name: "three", id: 3 },
+    { name: "four", id: 4 },
+    { name: "five", id: 5 },
+    { name: "six", id: 6 },
+    { name: "seven", id: 7 },
+    { name: "eight", id: 8 },
+    { name: "nine", id: 9 }
+  ]);
+  const [operatorButtons] = useState([
+    { name: "clear", id: "AC", key: 1 },
+    { name: "equals", id: "=", key: 2 },
+    { name: "add", id: "+", key: 3 },   
+    { name: "subtract", id: "-", key: 4 }, 
+    { name: "multiply", id: "*", key: 5 },
+    { name: "divide", id: "/", key: 6 },
+    { name: "decimal", id: ".", key: 7 }
+  ]);
 
   useEffect(() => {}, [count, countTwo, operator]);
 
@@ -69,8 +90,8 @@ const App = () => {
   return (
     <div className="Calculator">
       <div id="display">{countTwo}</div>
-      <OperatorPad handleFunction={handleFunction} />
-      <NumPad handleFunction={handleFunction} />
+      <OperatorPad operatorButtons={operatorButtons} handleFunction={handleFunction} />
+      <NumPad numberButtons={numberButtons} handleFunction={handleFunction} />
     </div>
   );
 }
