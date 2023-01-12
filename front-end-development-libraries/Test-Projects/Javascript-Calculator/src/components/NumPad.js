@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import '../App.css';
 
-const NumPad = (props) => {
+const NumPad = ({handleFunction}) => {
   const [numberButtons] = useState([
     { name: "zero", id: 0 },
     { name: "one", id: 1 },
@@ -24,7 +24,7 @@ const NumPad = (props) => {
         className="button" 
         key={numberButton.id} 
         id={ numberButton.name } 
-        onClick={() => props.setCountTwo(numberButton.id)}>
+        onClick={() => handleFunction(numberButton.id)}>
             {numberButton.id}
         </button>
       ))}

@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import '../App.css';
 
-const OperatorPad = (props) => {
+const OperatorPad = ({handleFunction}) => {
   const [operatorButtons] = useState([
     { name: "clear", id: "AC", key: 1 },
     { name: "equals", id: "=", key: 2 },
@@ -20,7 +20,7 @@ const OperatorPad = (props) => {
         className="button" 
         key={operatorButton.id} 
         id={ operatorButton.name} 
-        onClick={() => props.setOperator(operatorButton.id)}>
+        onClick={() => handleFunction(operatorButton.id)}>
             { operatorButton.id }
         </button> 
       ))}

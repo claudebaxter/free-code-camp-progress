@@ -69,8 +69,8 @@ const App = () => {
   return (
     <div className="Calculator">
       <div id="display">{countTwo}</div>
-      <OperatorPad setOperator={setOperator} onClick={handleFunction} />
-      <NumPad setCountTwo={setCountTwo} onClick={handleFunction} />
+      <OperatorPad handleFunction={handleFunction} />
+      <NumPad handleFunction={handleFunction} />
     </div>
   );
 }
