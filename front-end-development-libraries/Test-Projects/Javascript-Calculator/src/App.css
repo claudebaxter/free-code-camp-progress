@@ -6,7 +6,7 @@ body {
   display: grid;
   align-items: center;
   position: relative;
-  height: 80vh;
+  height: 90vh;
   width: 40vh;
   background-color: black;
   border: 5px solid white;
@@ -19,13 +19,26 @@ body {
 #display {
   display: flex;
   font-family: consolas;
-  height: 80%;
+  height: 75%;
   color: red;
   border-radius: 15px;
   border: 2px solid white;
   align-items: center;
   justify-content: right;
-  font-size: 2em;
+  font-size: 1.5em;
+  padding-right: 17px;
+}
+
+#secondary-display {
+  display: flex;
+  font-family: consolas;
+  height: 60%;
+  color: red;
+  border-radius: 15px;
+  border: 2px solid white;
+  align-items: center;
+  justify-content: right;
+  font-size: 1.5em;
   padding-right: 17px;
 }
 
