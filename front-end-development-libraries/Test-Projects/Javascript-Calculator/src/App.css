@@ -19,7 +19,7 @@ body {
 #display {
   display: flex;
   font-family: consolas;
-  height: 75%;
+  height: 50px;
   color: red;
   border-radius: 15px;
   border: 2px solid white;
@@ -32,7 +32,7 @@ body {
 #secondary-display {
   display: flex;
   font-family: consolas;
-  height: 60%;
+  height: 50px;
   color: red;
   border-radius: 15px;
   border: 2px solid white;
@@ -42,18 +42,16 @@ body {
   padding-right: 17px;
 }
 
-#operator-pad {
-  display: inline-block;
-  margin-bottom: -40px;
-  position: relative;
+#number-pad {
   border-top: 30px dotted hotpink;
+  display: inline-block;
+  position: relative;
   padding-top: 50px;
+  margin-bottom: 30px;
 }
 
-#number-pad {
-  display: inline-block;
-  position: relative;
-  margin-bottom: -30px;
+#decimal {
+  width: 301.7px;
 }
 
 .button {

@@ -1,28 +1,26 @@
+/* eslint no-eval: 0 */
 import React, { useState } from 'react';
 import './App.css';
-import OperatorPad from './components/OperatorPad';
-import NumPad from './components/NumPad';
+import ButtonPad from './components/ButtonPad';
 
-const numberButtons = [
-  { name: "zero", id: 0 },
-  { name: "one", id: 1 },
-  { name: "two", id: 2 },
-  { name: "three", id: 3 },
-  { name: "four", id: 4 },
-  { name: "five", id: 5 },
-  { name: "six", id: 6 },
-  { name: "seven", id: 7 },
-  { name: "eight", id: 8 },
-  { name: "nine", id: 9 }
-];
-const operatorButtons = [
-  { name: "clear", id: "AC", key: 1 },
-  { name: "equals", id: "=", key: 2 },
-  { name: "add", id: "+", key: 3 },   
-  { name: "subtract", id: "-", key: 4 }, 
-  { name: "multiply", id: "X", key: 5 },
-  { name: "divide", id: "/", key: 6 },
-  { name: "decimal", id: ".", key: 7 }
+const btnDetails = [
+  { id: "equals", value: "=" },
+  { id: "clear", value: "AC" },
+  { id: "divide", value: "/" },
+  { id: "multiply", value: "X" },
+  { id: "subtract", value: "-" },
+  { id: "add", value: "+" },
+  { id: "seven", value: 7 },
+  { id: "eight", value: 8 },
+  { id: "nine", value: 9 },
+  { id: "four", value: 4 },
+  { id: "five", value: 5 },
+  { id: "six", value: 6 },
+  { id: "one", value: 1 },
+  { id: "two", value: 2 },
+  { id: "three", value: 3 },
+  { id: "zero", value: 0 },
+  { id: "decimal", value: "." }
 ];
 
 const operators = ["AC", "/", "X", "+", "-", "="];
@@ -160,8 +158,8 @@ const App = () => {
     <div className="Calculator">
       <div id="display">{count}</div>
       <div id="secondary-display">{countTwo}</div>
-      <OperatorPad operatorButtons={operatorButtons} handleFunction={handleFunction} />
-      <NumPad numberButtons={numberButtons} handleFunction={handleFunction} />
+      <ButtonPad btnDetails={btnDetails} handleFunction={handleFunction} />
+      
     </div>
   );
 }
