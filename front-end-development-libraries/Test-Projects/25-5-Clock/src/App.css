@@ -1,0 +1,62 @@
+body {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+.body {
+  font-family: Consolas;
+  display: block;
+  text-align: center;
+  border: 3px solid white;
+  padding: 25px;
+  border-radius: 15px;
+  color: red;
+}
+
+.title {
+  border-bottom: 1px solid red;
+  display: block;
+}
+
+.toggle-switch {
+  display: inline-block;
+  margin: 0 40px 0 40px;
+}
+
+.arrow {
+  display: inline-block;
+  height: 2em;
+}
+
+.timer-wrapper {
+  display: inline-block;
+  margin: 20px auto;
+  border: 2px solid red;
+  width: 210px;
+  border-radius: 15px;
+}
+
+.time-left-title {
+  font-size: 3em;
+}
+
+.control-wrapper {
+  display: flex;
+  margin: auto;
+  width: 500px;
+  border-bottom: 10px dotted red;
+  padding-bottom: 15px;
+}
+
+#start_stop {
+  display: inline-block;
+  margin: 0 10px 0 auto;
+}
+
+#reset {
+  display: inline-block;
+  margin: 0 auto 0 10px;
+}
