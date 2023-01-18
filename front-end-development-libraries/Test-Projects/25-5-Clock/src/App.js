@@ -1,7 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRefresh, faPlay, faPause, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons'
+
+/*const beepSound = [{
+  keyCode: 1, 
+  key: 'A', 
+  id: 'Beep', 
+  url: 'https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav'}
+]
+
+const BeepSound = ({ beep, sound: { keyCode, key, id, url } }) = {}*/
 
 const App = () => {
   const [sessionLength, setSessionLength] = useState(25); //will toggle up/down to set sessionTime
@@ -11,7 +20,7 @@ const App = () => {
   const [play, setPlay] = useState(false); //determines if play function is active or off with a boolean
 
   const timeout = setTimeout(() => {
-    if(sessionTime && play){
+    if ( sessionTime && play ){
       setSessionTime(sessionTime - 1);
     }
   }, 1000);
@@ -94,6 +103,7 @@ const App = () => {
     const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
     return `${formattedMinutes}:${formattedSeconds}`;
   }
+  
 
   const title = timerLabel === "SESSION" ? "Session" : "Break";
 
