@@ -114,3 +114,18 @@ This method empties out the list.
 clear() {
 	this.head = null;
 }
+
+/*
+getLast()
+This method returns the last node of the linked list.
+*/
+
+getLast() {
+	let lastNode = this.head;
+	if (lastNode) {
+		while (lastNode.next) {
+			lastNode = lastNode.next
+		}
+	}
+	return lastNode
+}
