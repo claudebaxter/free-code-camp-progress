@@ -28,3 +28,29 @@ const list = {
         }
     }
 };
+
+/* 
+Advantage: nodes can easily be removed or added from a linked list without reorganizing the entire data structure. 
+
+Disadvantages: 
+1) search operations are slow in linked lists (unlike arrays, random access of data elements is not allowed, nodes are accessed sequentially starting from thef irst node).
+
+2) It uses more memory than arrays because of the storage pointers.
+
+Types of Linked Lists:
+1) Singly Linked Lists: each node contains only one pointer to the next node. (like example above)
+
+2) Doubly Linked Lists: Each node contains two pointers, a pointer to the next node and a pointer to the previous node.
+
+3) Circular Linked Lists: a variation of a linked list in which the last node points to the first node or any other node before it, thereby forming a loop.
+
+Implementing a List Node in Javascript
+A node contains two items: the data and the pointer to the next node(s). We can implement a list node in javascript as follows:
+*/
+
+class ListNode {
+	constructor(data) {
+		this.data = data
+		this.next = null
+	}
+}
