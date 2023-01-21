@@ -65,3 +65,20 @@ class LinkedList {
 		this.head = head
 	}
 }
+
+/*
+Putting it all together
+Let's create a linked list with the class we just created. First, we create two list nodes, node 1 and node 2, and a pointer from node 1 to node 2.
+*/
+
+let node1 = new ListNode(2)
+let node2 = new ListNode(5)
+node1.next = node2
+
+//Next, we'll create a Linked list with the node1
+
+let list = new LinkedList(node1)
+
+//Lets try to access the nodes in the list we just created:
+
+console.log(list.head.next.data) //returns 5
