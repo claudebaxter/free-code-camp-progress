@@ -82,3 +82,26 @@ let list = new LinkedList(node1)
 //Lets try to access the nodes in the list we just created:
 
 console.log(list.head.next.data) //returns 5
+
+/*
+Some LinkedList methods
+Next we will implement four helper methods for the linked list. They are:
+
+1) size()
+2) clear()
+3) getLast()
+4) getFirst()
+
+size()
+This method returns the number of nodes present in the linked list.
+*/
+
+size() {
+	let count = 0;
+	let node = this.head;
+	while (node) {
+		count++;
+		node = node.next
+	}
+	return count;
+}
