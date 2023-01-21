@@ -129,3 +129,12 @@ getLast() {
 	}
 	return lastNode
 }
+
+/*
+getFirst()
+This method returns the first node of the linked list.
+*/
+
+getFirst() {
+	return this.head;
+}
