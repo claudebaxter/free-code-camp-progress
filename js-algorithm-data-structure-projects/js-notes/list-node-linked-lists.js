@@ -105,3 +105,12 @@ size() {
 	}
 	return count;
 }
+
+/*
+clear()
+This method empties out the list.
+*/
+
+clear() {
+	this.head = null;
+}
