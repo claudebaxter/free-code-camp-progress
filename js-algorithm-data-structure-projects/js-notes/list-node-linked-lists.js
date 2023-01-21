@@ -54,3 +54,14 @@ class ListNode {
 		this.next = null
 	}
 }
+
+/*
+Implementing a Linked List in JavaScript
+The code below shows the implementation of a linked list class with a constructor. Notice that if the head node is not passed, the head is initialised to null.
+*/
+
+class LinkedList {
+	constructor(head = null) {
+		this.head = head
+	}
+}
