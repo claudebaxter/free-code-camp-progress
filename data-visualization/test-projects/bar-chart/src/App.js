@@ -1,31 +1,19 @@
-import React, { Component } from 'react'
+import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
-import * as d3 from "d3";
-import BarChart from './BarChart'
 
+function App() {
+  const [data] = useState([200, 250, 60, 150, 175]);
+  const svgRef = useRef();
 
+  useEffect(() => {
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dataset: d3.json('https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/master/GDP-data.json')
-    }
-  }
+  }, [data]);
 
-  render() {
-     console.log(this.state.dataset);
-    return (
-      <div className="App">
-        <div id="title">
-          <h2>United States GDP</h2>
-        </div>
-        <div>
-          <BarChart data={[5,10,1,3]} size={[500,500]} />
-        </div>
-      </div>
-    )
-  }
+  return (
+    <div className="App">
+      <svg ref={svgRef}></svg>
+    </div>
+  );
 }
 
 export default App;
