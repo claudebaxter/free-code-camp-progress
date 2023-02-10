@@ -39,12 +39,12 @@ function App() {
     // 4 set up the svg data
     svg.selectAll('.bar')
       .data(data)
-      .attr('class', 'bar')
       .join('rect')
         .attr('x', (v, i) => xScale(i))
         .attr('y', yScale)
         .attr('width', xScale.bandwidth())
-        .attr('height', val => h - yScale(val));
+        .attr('height', val => h - yScale(val))
+        .attr('class', 'bar');
   }, [data]);
   //passing svgRef to svg lets svg control the DOM
   //react and D3 both control the DOM, so we are using useRef
