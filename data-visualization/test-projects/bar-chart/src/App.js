@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import './App.css';
 
 function App() {
-  const [data] = useState([200, 250, 60, 150, 175]);
+  const [data] = useState([200, 250, 60, 150, 100, 175]);
   const svgRef = useRef();
 
   //anything written in useEffect will be relevant to D3 code
@@ -23,7 +23,7 @@ function App() {
       .padding(0.5);
     const yScale = d3.scaleLinear()
       .domain([0, h])
-      .range([h, 0]) //inverting range, since y scale always starts from the top left
+      .range([h, 0]); //inverting range, since y scale always starts from the top left
     // 3 set up the axis
     const xAxis = d3.axisBottom(xScale)
       .ticks(data.length);
@@ -31,12 +31,15 @@ function App() {
       .ticks(5);
     svg.append('g')
       .call(xAxis)
-      .attr('transform', `translate(0, ${h})`);
+      .attr('transform', `translate(0, ${h})`)
+      .attr('id', "x-axis");
     svg.append('g')
-      .call(yAxis);
+      .call(yAxis)
+      .attr('id', 'y-axis');
     // 4 set up the svg data
     svg.selectAll('.bar')
       .data(data)
+      .attr('class', 'bar')
       .join('rect')
         .attr('x', (v, i) => xScale(i))
         .attr('y', yScale)
@@ -48,6 +51,7 @@ function App() {
   //to allow D3 to control the DOM.
   return (
     <div className="App">
+      <h1 id="title">United States GDP</h1>
       <svg ref={svgRef}></svg>
     </div>
   );
