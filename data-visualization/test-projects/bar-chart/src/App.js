@@ -14,9 +14,11 @@ function App() {
       const response = await fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json");
       const data = await response.json();
       console.log(data);
-      setCountryData(data);
+      setCountryData(data.data);
     }
     fetchData();
+
+    console.log(countryData);
 
     // 1 set up svg container
     const w = 400;
