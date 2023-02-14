@@ -56,6 +56,12 @@ function BarChart ({data, height, width, widthOfBar, dataType}) {
       return item[1];
     });
 
+    var dataDate = data.map(function (item) {
+      return item[0];
+    });
+
+    console.log("dataDate", dataDate);
+
     console.log("GDP", GDP);
 
     var scaledGDP = [];
@@ -72,7 +78,12 @@ function BarChart ({data, height, width, widthOfBar, dataType}) {
     console.log("scaledGDP", scaledGDP);
     //const dataMax = d3.max(countryData);
     const yScale = d3.scaleLinear().domain([0, gdpMax]).range([0, height]);
-    d3.select("svg").selectAll("rect").data(countryData).enter().append("rect");
+    const xScale = d3.scaleLinear().domain([years[0], years[247]]).range([0, width]);
+    d3.select("svg")
+      .selectAll("rect")
+      .data(countryData)
+      .enter()
+      .append("rect");
     d3.select("svg")
       .selectAll("rect")
       .data(scaledGDP)
@@ -81,7 +92,29 @@ function BarChart ({data, height, width, widthOfBar, dataType}) {
       .attr("x", (d, i) => i * widthOfBar)
       .attr("y", (d) => height - yScale(d + gdpMax * 0.5))
       .attr("height", (d, i) => yScale(d + gdpMax * 0.5))
-      .attr("width", widthOfBar);
+      .attr("width", widthOfBar)
+      .attr('data-date', function (d, i) {
+        return dataDate[i];
+      })
+      .attr('data-gdp', function (d, i) {
+        return GDP[i];
+      });
+
+    //set up axis:
+
+    const xAxis = d3.axisBottom(xScale)
+      .ticks(years.length);
+    const yAxis = d3.axisLeft(yScale)
+      .ticks(GDP.length);
+    d3.select("svg")
+      .append('g')
+      .call(xAxis)
+      .attr('transform', `translate(0, ${height})`)
+      .attr('id', "x-axis");
+    d3.select("svg")
+      .append('g')
+      .call(yAxis)
+      .attr('id', 'y-axis');
 
   }
 
