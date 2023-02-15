@@ -79,6 +79,8 @@ function BarChart ({data, height, width, widthOfBar, dataType}) {
     //const dataMax = d3.max(countryData);
     const yScale = d3.scaleLinear().domain([0, gdpMax]).range([0, height]);
     const xScale = d3.scaleLinear().domain([years[0], years[247]]).range([0, width]);
+    console.log("yScale", yScale);
+    console.log("xScale", xScale);
     d3.select("svg")
       .selectAll("rect")
       .data(countryData)
@@ -88,10 +90,12 @@ function BarChart ({data, height, width, widthOfBar, dataType}) {
       .selectAll("rect")
       .data(scaledGDP)
       .style("fill", (d, i) => (i % 2 === 0 ? "#9595ff" : "44ff44"))
+      .attr("y", (d, i) => {
+        return height - d;
+      })
+      .style("height", (d) => d)
       .attr("class", "bar")
       .attr("x", (d, i) => i * widthOfBar)
-      .attr("y", (d) => height - yScale(d + gdpMax * 0.5))
-      .attr("height", (d, i) => yScale(d + gdpMax * 0.5))
       .attr("width", widthOfBar)
       .attr('data-date', function (d, i) {
         return dataDate[i];
