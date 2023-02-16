@@ -77,23 +77,24 @@ function BarChart ({data, height, width, widthOfBar}) {
     });
     console.log("scaledGDP", scaledGDP);
     //const dataMax = d3.max(countryData);
-    const yScale = d3.scaleLinear().domain([0, gdpMax]).range([0, height]);
-    const xScale = d3.scaleLinear().domain([years[0], years[247]]).range([0, width]);
-    console.log("yScale", yScale);
-    console.log("xScale", xScale);
-    const xAxis = d3.axisBottom(xScale)
-      .ticks(274);
-    const yAxis = d3.axisLeft(yScale)
-      .ticks(100);
+    var yearsDate = data.map(function (item) {
+      return new Date(item[0]);
+    });
+    var xMax = new Date(d3.max(yearsDate));
+    const yScale = d3.scaleLinear().domain([0, gdpMax]).range([height, 0]);
+    const xScale = d3.scaleTime().domain([d3.min(yearsDate), xMax]).range([0, countryData.length * 5]);
+    const xAxis = d3.axisBottom().scale(xScale);
+    const yAxis = d3.axisLeft(yScale);
     d3.select("svg")
       .append('g')
       .call(xAxis)
-      .attr('transform', `translate(0, ${height})`)
+      .attr('transform', `translate(0, 450)`)
       .attr('id', "x-axis");
     d3.select("svg")
       .append('g')
       .call(yAxis)
-      .attr('id', 'y-axis');
+      .attr('id', 'y-axis')
+      .attr('transform', 'translate(10, 0)');
 
     d3.select("svg")
       .selectAll("rect")
