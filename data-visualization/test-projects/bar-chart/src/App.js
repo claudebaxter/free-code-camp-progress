@@ -18,12 +18,12 @@ function App() {
   return (
     <div className="App">
       <h1 id="title">United States GDP</h1>
-      <BarChart data={countryData} height={500} widthOfBar={5} width={countryData.length * 5} dataType={"data"}/>
+      <BarChart data={countryData} height={500} widthOfBar={5} width={countryData.length * 5} />
     </div>
   );
 }
 
-function BarChart ({data, height, width, widthOfBar, dataType}) {
+function BarChart ({data, height, width, widthOfBar}) {
   useEffect(() => {
     createBarChart();
   }, [data])
@@ -81,11 +81,26 @@ function BarChart ({data, height, width, widthOfBar, dataType}) {
     const xScale = d3.scaleLinear().domain([years[0], years[247]]).range([0, width]);
     console.log("yScale", yScale);
     console.log("xScale", xScale);
+    const xAxis = d3.axisBottom(xScale)
+      .ticks(274);
+    const yAxis = d3.axisLeft(yScale)
+      .ticks(100);
+    d3.select("svg")
+      .append('g')
+      .call(xAxis)
+      .attr('transform', `translate(0, ${height})`)
+      .attr('id', "x-axis");
+    d3.select("svg")
+      .append('g')
+      .call(yAxis)
+      .attr('id', 'y-axis');
+
     d3.select("svg")
       .selectAll("rect")
       .data(countryData)
       .enter()
       .append("rect");
+
     d3.select("svg")
       .selectAll("rect")
       .data(scaledGDP)
@@ -102,23 +117,12 @@ function BarChart ({data, height, width, widthOfBar, dataType}) {
       })
       .attr('data-gdp', function (d, i) {
         return GDP[i];
-      });
-
-    //set up axis:
-
-    const xAxis = d3.axisBottom(xScale)
-      .ticks(years.length);
-    const yAxis = d3.axisLeft(yScale)
-      .ticks(GDP.length);
-    d3.select("svg")
-      .append('g')
-      .call(xAxis)
-      .attr('transform', `translate(0, ${height})`)
-      .attr('id', "x-axis");
-    d3.select("svg")
-      .append('g')
-      .call(yAxis)
-      .attr('id', 'y-axis');
+      })
+      .append("title")
+      .text(function (d, i) {
+        return dataDate[i]
+      })
+        .attr("id", "tooltip");
 
   }
 
