@@ -18,7 +18,7 @@ function App() {
   return (
     <div className="App">
       <h1 id="title">United States GDP</h1>
-      <BarChart data={countryData} height={500} widthOfBar={5} width={countryData.length * 5} />
+      <BarChart data={countryData} height={700} widthOfBar={5} width={countryData.length * 7} />
     </div>
   );
 }
@@ -88,19 +88,20 @@ function BarChart ({data, height, width, widthOfBar}) {
     d3.select("svg")
       .append('g')
       .call(xAxis)
-      .attr('transform', `translate(0, 450)`)
+      .attr('transform', `translate(20, 683)`)
       .attr('id', "x-axis");
     d3.select("svg")
       .append('g')
       .call(yAxis)
       .attr('id', 'y-axis')
-      .attr('transform', 'translate(10, 0)');
+      .attr('transform', 'translate(45, 30)');
 
     d3.select("svg")
       .selectAll("rect")
       .data(countryData)
       .enter()
-      .append("rect");
+      .append("rect")
+      .attr('transform', 'translate(20, -20)');
 
     d3.select("svg")
       .selectAll("rect")
