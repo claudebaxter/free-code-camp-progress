@@ -56,7 +56,7 @@ function BarChart({ data, width, height }) {
     // Add x-axis
     svg
       .select('.x-axis')
-      .attr('transform', `translate(${margin.left},${chartHeight + margin.top})`)
+      .attr('transform', `translate(0,${chartHeight + margin.top})`)
       .call(d3.axisBottom(xScale))
       .attr('id', "x-axis");
 
