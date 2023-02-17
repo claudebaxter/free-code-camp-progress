@@ -52,18 +52,30 @@ function BarChart ({data, height, width, widthOfBar}) {
     scaledGDP = GDP.map(function (item) { return linearScale(item); });
     console.log("scaledGDP", scaledGDP);
 
+    function getYears(dateStrings) {
+      let years = [];
+      for (let i = 0; i < dateStrings.length; i++) {
+        let date = new Date(dateStrings[i]);
+        let year = date.getFullYear();
+        years.push(year);
+      }
+      return years;
+    }
+
+    let years = getYears(dataDate);
+    console.log("years", years);
+
     var padding = 5;
 
     const yScale = d3.scaleLinear()
       .domain([0, Math.ceil(d3.max(data, d => d[1]) / 1000) * 1000])
       .range([height - padding, padding]);
 
-    const xScale = d3.scaleLinear()
-      .domain([d3.min(data, d => d[0]), d3.max(data, d => d[0]) + 1])
+    const xScale = d3.scaleTime()
+      .domain(years)
       .range([padding, width - padding]);
 
-    const xAxis = d3.axisBottom(xScale)
-      .tickValues(dataDate.map(d => d[0]));
+    const xAxis = d3.axisBottom(xScale);
 
     const yAxis = d3.axisLeft(yScale)
       .tickValues(d3.range(0, Math.ceil(d3.max(data, d => d[1]) / 1000) * 1000 + 1, 1000));
