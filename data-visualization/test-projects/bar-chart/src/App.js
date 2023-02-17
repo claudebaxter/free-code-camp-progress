@@ -1,127 +1,109 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import * as d3 from 'd3';
 import './App.css';
 
 function App() {
-  const [countryData, setCountryData] = useState([]);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-  async function fetchData() {
-    const response = await fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json");
-    const data = await response.json();
-    console.log("data", data.data);
-    setCountryData(data.data);
-  }
+    async function fetchData() {
+      const response = await fetch('https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/master/GDP-data.json');
+      const data = await response.json();
+      setData(data.data);
+    }
+
+    console.log(data);
+
     fetchData();
   }, []);
-  
+
   return (
     <div className="App">
       <h1 id="title">United States GDP</h1>
-      <BarChart data={countryData} height={500} widthOfBar={5} width={countryData.length * 5.25} />
+      <BarChart data={data} width={800} height={400} />
     </div>
   );
 }
 
-function BarChart ({data, height, width, widthOfBar}) {
+function BarChart({ data, width, height }) {
+  const svgRef = useRef();
+
   useEffect(() => {
-    createBarChart();
-  }, [data])
+    const svg = d3.select(svgRef.current);
 
-  const createBarChart = () => {
-    const countryData = data;
-
-    console.log("countryData", countryData);
-
+    // Define the margins
+    const margin = { top: 20, right: 20, bottom: 50, left: 50 };
+    const chartWidth = width - margin.left - margin.right;
+    const chartHeight = height - margin.top - margin.bottom;
     var GDP = data.map(function (item) { return item[1]; });
-
+    console.log("GDP", GDP);
     var dataDate = data.map(function (item) { return item[0]; });
-
     console.log("dataDate", dataDate);
 
-    console.log("GDP", GDP);
+    // Create x-axis scale
+    const xScale = d3
+      .scaleBand()
+      .domain(data.map((d) => d[0]))
+      .range([0, chartWidth])
+      .padding(0.2);
 
-    var scaledGDP = [];
+    // Create y-axis scale
+    const yScale = d3
+      .scaleLinear()
+      .domain([0, d3.max(data, (d) => d[1])])
+      .range([0, chartHeight]);
 
-    var gdpMax = d3.max(GDP);
-
-    console.log("gdpMax", gdpMax);
-
-    var linearScale = d3.scaleLinear().domain([0, gdpMax]).range([0, height]);
-
-    scaledGDP = GDP.map(function (item) { return linearScale(item); });
-    console.log("scaledGDP", scaledGDP);
-
-    function getYears(dateStrings) {
-      let years = [];
-      for (let i = 0; i < dateStrings.length; i++) {
-        let date = new Date(dateStrings[i]);
-        let year = date.getFullYear();
-        years.push(year);
-      }
-      return years;
-    }
-
-    let years = getYears(dataDate);
-    console.log("years", years);
-
-    var padding = 5;
-
-    const yScale = d3.scaleLinear()
-      .domain([0, Math.ceil(d3.max(data, d => d[1]) / 1000) * 1000])
-      .range([height - padding, padding]);
-
-    const xScale = d3.scaleTime()
-      .domain(years)
-      .range([padding, width - padding]);
-
-    const xAxis = d3.axisBottom(xScale);
-
-    const yAxis = d3.axisLeft(yScale)
-      .tickValues(d3.range(0, Math.ceil(d3.max(data, d => d[1]) / 1000) * 1000 + 1, 1000));
-
-    d3.select("svg")
-      .append('g')
-      .call(xAxis)
-      .attr('transform', `translate(45, 483)`)
+    // Add x-axis
+    svg
+      .select('.x-axis')
+      .attr('transform', `translate(${margin.left},${chartHeight + margin.top})`)
+      .call(d3.axisBottom(xScale))
       .attr('id', "x-axis");
 
-    d3.select("svg")
-      .append('g')
-      .call(yAxis)
-      .attr('id', 'y-axis')
-      .attr('transform', `translate(45, -20)`);
+    // Add y-axis
+    svg
+      .select('.y-axis')
+      .attr('transform', `translate(${margin.left},${margin.top})`)
+      .call(d3.axisLeft(yScale))
+      .attr('id', 'y-axis');
 
-    d3.select("svg")
-      .selectAll("rect")
-      .data(countryData)
-      .enter()
-      .append("rect")
-      .attr('transform', 'translate(45, -20)');
-
-    d3.select("svg")
-      .selectAll("rect")
-      .data(scaledGDP)
+    // Add bars
+    svg
+      .select('.bars')
+      .selectAll('rect')
+      .data(data)
       .style("fill", (d, i) => (i % 2 === 0 ? "#9595ff" : "44ff44"))
-      .attr("y", (d, i) => { return height - d; })
-      .style("height", (d) => d)
-      .attr("class", "bar")
-      .attr("x", (d, i) => i * widthOfBar)
-      .attr("width", widthOfBar)
+      .join('rect')
+      .attr('x', (d) => xScale(d[0]) + margin.left)
+      .attr('y', (d) => yScale(d[1]) + margin.top)
+      .attr('width', xScale.bandwidth())
+      .attr('height', (d) => d[1])
       .attr('data-date', function (d, i) { return dataDate[i]; })
       .attr('data-gdp', function (d, i) { return GDP[i]; })
-      .append("title")
-      .text(function (d, i) { return dataDate[i]; })
-        .attr("id", "tooltip");
+      .attr("class", "bar");
 
-  }
+    // Add x-axis label
+    svg
+      .select('.x-axis-label')
+      .attr('transform', `translate(${width / 2}, ${height - 10})`)
+      .text('Year');
+
+    // Add y-axis label
+    svg
+      .select('.y-axis-label')
+      .attr('transform', `rotate(-90) translate(${-height / 2}, 15)`)
+      .text('Value');
+  }, [data, width, height]);
 
   return (
-    <>
-      <svg width={width} height={height}></svg>
-    </>
-  )
-
+    <svg ref={svgRef} width={width} height={height}>
+      <g className="x-axis" />
+      <g className="y-axis" />
+      <g className="bars" />
+      <text className="x-axis-label" textAnchor="middle" />
+      <text className="y-axis-label" textAnchor="middle" />
+    </svg>
+  );
 }
 
 export default App;
