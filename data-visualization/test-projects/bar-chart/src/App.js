@@ -57,8 +57,15 @@ function BarChart({ data, width, height }) {
     svg
       .select('.x-axis')
       .attr('transform', `translate(0,${chartHeight + margin.top})`)
-      .call(d3.axisBottom(xScale))
-      .attr('id', "x-axis");
+      .call(d3.axisBottom(xScale).tickFormat((d) => {
+        return dataDate;
+      }))
+      .attr('id', "x-axis")
+      .selectAll("text")
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", "rotate(-45)");
 
     // Add y-axis
     svg
@@ -81,17 +88,17 @@ function BarChart({ data, width, height }) {
       .attr('data-gdp', function (d, i) { return GDP[i]; })
       .attr("class", "bar");
 
-    // Add x-axis label
-    svg
+    // Add x-axis label (commenting out because I don't want to use these for this project)
+    /*svg
       .select('.x-axis-label')
       .attr('transform', `translate(${width / 2})`)
       .text('Year');
 
-    // Add y-axis label
+    // Add y-axis label (commenting out because I don't want to use these for this project)
     svg
       .select('.y-axis-label')
       .attr('transform', `rotate(-90) translate(${-height / 2}, 15)`)
-      .text('Value');
+      .text('Value');*/
   }, [data, width, height]);
 
   return (
