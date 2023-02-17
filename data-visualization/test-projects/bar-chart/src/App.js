@@ -18,7 +18,7 @@ function App() {
   return (
     <div className="App">
       <h1 id="title">United States GDP</h1>
-      <BarChart data={countryData} height={700} widthOfBar={5} width={countryData.length * 7} />
+      <BarChart data={countryData} height={500} widthOfBar={5} width={countryData.length * 5.25} />
     </div>
   );
 }
@@ -33,32 +33,9 @@ function BarChart ({data, height, width, widthOfBar}) {
 
     console.log("countryData", countryData);
 
-    const years = data.map(function (item) {
-      var quarter;
-      var temp = item[0].substring(5, 7);
+    var GDP = data.map(function (item) { return item[1]; });
 
-      if (temp === "01") {
-        quarter = "Q1";
-      } else if (temp === '04') {
-        quarter = 'Q2';
-      } else if (temp === '07') {
-        quarter = 'Q3';
-      } else if (temp === '10') {
-        quarter = 'Q4';
-      }
-
-      return item[0].substring(0, 4) + ' ' + quarter;
-    });
-
-    console.log("years", years);
-
-    var GDP = data.map(function (item) {
-      return item[1];
-    });
-
-    var dataDate = data.map(function (item) {
-      return item[0];
-    });
+    var dataDate = data.map(function (item) { return item[0]; });
 
     console.log("dataDate", dataDate);
 
@@ -72,58 +49,57 @@ function BarChart ({data, height, width, widthOfBar}) {
 
     var linearScale = d3.scaleLinear().domain([0, gdpMax]).range([0, height]);
 
-    scaledGDP = GDP.map(function (item) {
-      return linearScale(item);
-    });
+    scaledGDP = GDP.map(function (item) { return linearScale(item); });
     console.log("scaledGDP", scaledGDP);
-    //const dataMax = d3.max(countryData);
-    var yearsDate = data.map(function (item) {
-      return new Date(item[0]);
-    });
-    var xMax = new Date(d3.max(yearsDate));
-    const yScale = d3.scaleLinear().domain([0, gdpMax]).range([height, 0]);
-    const xScale = d3.scaleTime().domain([d3.min(yearsDate), xMax]).range([0, countryData.length * 5]);
-    const xAxis = d3.axisBottom().scale(xScale);
-    const yAxis = d3.axisLeft(yScale);
+
+    var padding = 5;
+
+    const yScale = d3.scaleLinear()
+      .domain([0, Math.ceil(d3.max(data, d => d[1]) / 1000) * 1000])
+      .range([height - padding, padding]);
+
+    const xScale = d3.scaleLinear()
+      .domain([d3.min(data, d => d[0]), d3.max(data, d => d[0]) + 1])
+      .range([padding, width - padding]);
+
+    const xAxis = d3.axisBottom(xScale)
+      .tickValues(dataDate.map(d => d[0]));
+
+    const yAxis = d3.axisLeft(yScale)
+      .tickValues(d3.range(0, Math.ceil(d3.max(data, d => d[1]) / 1000) * 1000 + 1, 1000));
+
     d3.select("svg")
       .append('g')
       .call(xAxis)
-      .attr('transform', `translate(20, 683)`)
+      .attr('transform', `translate(45, 483)`)
       .attr('id', "x-axis");
+
     d3.select("svg")
       .append('g')
       .call(yAxis)
       .attr('id', 'y-axis')
-      .attr('transform', 'translate(45, 30)');
+      .attr('transform', `translate(45, -20)`);
 
     d3.select("svg")
       .selectAll("rect")
       .data(countryData)
       .enter()
       .append("rect")
-      .attr('transform', 'translate(20, -20)');
+      .attr('transform', 'translate(45, -20)');
 
     d3.select("svg")
       .selectAll("rect")
       .data(scaledGDP)
       .style("fill", (d, i) => (i % 2 === 0 ? "#9595ff" : "44ff44"))
-      .attr("y", (d, i) => {
-        return height - d;
-      })
+      .attr("y", (d, i) => { return height - d; })
       .style("height", (d) => d)
       .attr("class", "bar")
       .attr("x", (d, i) => i * widthOfBar)
       .attr("width", widthOfBar)
-      .attr('data-date', function (d, i) {
-        return dataDate[i];
-      })
-      .attr('data-gdp', function (d, i) {
-        return GDP[i];
-      })
+      .attr('data-date', function (d, i) { return dataDate[i]; })
+      .attr('data-gdp', function (d, i) { return GDP[i]; })
       .append("title")
-      .text(function (d, i) {
-        return dataDate[i]
-      })
+      .text(function (d, i) { return dataDate[i]; })
         .attr("id", "tooltip");
 
   }
