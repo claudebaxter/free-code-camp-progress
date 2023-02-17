@@ -44,14 +44,14 @@ function BarChart({ data, width, height }) {
     const xScale = d3
       .scaleBand()
       .domain(data.map((d) => d[0]))
-      .range([0, chartWidth])
-      .padding(0.2);
+      .range([margin.left, chartWidth + margin.left])
+      .padding(0.1);
 
     // Create y-axis scale
     const yScale = d3
       .scaleLinear()
       .domain([0, d3.max(data, (d) => d[1])])
-      .range([0, chartHeight]);
+      .range([chartHeight, 0]);
 
     // Add x-axis
     svg
@@ -72,12 +72,11 @@ function BarChart({ data, width, height }) {
       .select('.bars')
       .selectAll('rect')
       .data(data)
-      .style("fill", (d, i) => (i % 2 === 0 ? "#9595ff" : "44ff44"))
       .join('rect')
-      .attr('x', (d) => xScale(d[0]) + margin.left)
+      .attr('x', (d) => xScale(d[0]))
       .attr('y', (d) => yScale(d[1]) + margin.top)
       .attr('width', xScale.bandwidth())
-      .attr('height', (d) => d[1])
+      .attr('height', (d) => chartHeight - yScale(d[1]))
       .attr('data-date', function (d, i) { return dataDate[i]; })
       .attr('data-gdp', function (d, i) { return GDP[i]; })
       .attr("class", "bar");
@@ -85,7 +84,7 @@ function BarChart({ data, width, height }) {
     // Add x-axis label
     svg
       .select('.x-axis-label')
-      .attr('transform', `translate(${width / 2}, ${height - 10})`)
+      .attr('transform', `translate(${width / 2})`)
       .text('Year');
 
     // Add y-axis label
