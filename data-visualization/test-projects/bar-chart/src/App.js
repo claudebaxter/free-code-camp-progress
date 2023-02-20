@@ -104,6 +104,9 @@ if (data.length === 0) return;
         tooltip.html("Year: " + d[0] + `<br/>` + 'GDP (Billions) $' + d[1])
           .style("left", (event.pageX + 10) + "px")
           .style("top", (event.pageY - 28) + "px");
+        })
+        .on("mouseout", (event, d) => {
+          tooltip.transition().duration(200).style('opacity', 0);
         });
 
     // Add x-axis label (commenting out because I don't want to use these for this project)
