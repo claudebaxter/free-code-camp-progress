@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import * as d3 from 'd3';
 import './App.css';
@@ -45,8 +46,6 @@ if (data.length === 0) return;
     console.log("dataDate", dataDate);
     let tooltip = d3.select(".visHolder")
       .append("div")
-      .attr("id", "tooltip")
-      .attr('data-date', function (d, i) { return dataDate[i]; })
       .style("opacity", 0);
 
     // Create x-axis scale
@@ -100,6 +99,7 @@ if (data.length === 0) return;
       .attr("class", "bar")
       .on("mouseover", (event, d) => {
         tooltip.attr('data-date', d[0]);
+        tooltip.attr("id", "tooltip")
         tooltip.style("opacity", 0.9);
         tooltip.html("Year: " + d[0] + `<br/>` + 'GDP (Billions) $' + d[1])
           .style("left", (event.pageX + 10) + "px")
