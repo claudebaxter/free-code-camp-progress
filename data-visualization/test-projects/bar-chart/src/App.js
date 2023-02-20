@@ -20,7 +20,9 @@ function App() {
   return (
     <div className="App">
       <h1 id="title">United States GDP</h1>
-      <BarChart data={data} width={800} height={400} />
+      <div className="visHolder">
+        <BarChart data={data} width={800} height={400} />
+      </div>
     </div>
   );
 }
@@ -31,7 +33,7 @@ function BarChart({ data, width, height }) {
   useEffect(() => {
 if (data.length === 0) return;
 
-    const svg = d3.select(svgRef.current);
+    const svg = d3.select(svgRef.current).attr("id", "svg");
 
     // Define the margins
     const margin = { top: 20, right: 20, bottom: 50, left: 50 };
@@ -41,6 +43,11 @@ if (data.length === 0) return;
     console.log("GDP", GDP);
     var dataDate = data.map(function (item) { return item[0]; });
     console.log("dataDate", dataDate);
+    let tooltip = d3.select(".visHolder")
+      .append("div")
+      .attr("id", "tooltip")
+      .attr('data-date', function (d, i) { return dataDate[i]; })
+      .style("opacity", 0);
 
     // Create x-axis scale
     const xScale = d3
@@ -90,7 +97,14 @@ if (data.length === 0) return;
       .attr('height', (d) => chartHeight - yScale(d[1]))
       .attr('data-date', function (d, i) { return dataDate[i]; })
       .attr('data-gdp', function (d, i) { return GDP[i]; })
-      .attr("class", "bar");
+      .attr("class", "bar")
+      .on("mouseover", (event, d) => {
+        tooltip.attr('data-date', d[0]);
+        tooltip.style("opacity", 0.9);
+        tooltip.html("Year: " + d[0] + `<br/>` + 'GDP (Billions) $' + d[1])
+          .style("left", (event.pageX + 10) + "px")
+          .style("top", (event.pageY - 28) + "px");
+        });
 
     // Add x-axis label (commenting out because I don't want to use these for this project)
     svg
