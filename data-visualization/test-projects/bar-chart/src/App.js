@@ -67,7 +67,7 @@ if (data.length === 0) return;
       .style('text-anchor', 'end')
       .attr('dx', '-.8em')
       .attr('dy', '.15em')
-      .attr('transform', 'rotate(-45)');
+      .attr('transform', 'rotate(-35)');
 
     // Add y-axis
     svg
@@ -85,6 +85,7 @@ if (data.length === 0) return;
       .join('rect')
       .attr('x', (d, i) => xScale(new Date(d[0])) + margin.left - barWidth / 2)
       .attr('y', (d) => yScale(d[1]) + margin.top)
+      .attr('transform', `translate(-50,0)`)
       .attr('width', barWidth)
       .attr('height', (d) => chartHeight - yScale(d[1]))
       .attr('data-date', function (d, i) { return dataDate[i]; })
@@ -92,15 +93,15 @@ if (data.length === 0) return;
       .attr("class", "bar");
 
     // Add x-axis label (commenting out because I don't want to use these for this project)
-    /*svg
+    svg
       .select('.x-axis-label')
-      .attr('transform', `translate(${width / 2})`)
+      .attr('transform', `translate(415, 400)`)
       .text('Year');
     // Add y-axis label (commenting out because I don't want to use these for this project)
     svg
       .select('.y-axis-label')
-      .attr('transform', `rotate(-90) translate(${-height / 2}, 15)`)
-      .text('Value');*/
+      .attr('transform', `rotate(-90) translate(${-height / 2}, 75)`)
+      .text('GDP');
   }, [data, width, height]);
 
   return (
