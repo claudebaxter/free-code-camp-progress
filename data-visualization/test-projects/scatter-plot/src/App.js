@@ -1,9 +1,9 @@
 import './App.css';
 import * as d3 from 'd3';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function App() {
-  const [cycleData, setCycleData] = useState([]);
+  const [cyclistData, setCyclistData] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -12,74 +12,200 @@ function App() {
       );
       const data = await response.json();
       console.log(data);
-      setCycleData(data);
+      setCyclistData(data);
     }
     fetchData();
-    console.log("cycleData", cycleData);
+    console.log("cyclistData", cyclistData);
   }, []);
 
   return (
     <div className="App">
-      <h1 id="title">Doping in Professional Bicycling</h1>
       <div className="visHolder">
-        <ScatterPlot data={cycleData} width={800} height={400} />
+        <BarChart data={cyclistData} />
       </div>
     </div>
   );
 }
 
-function ScatterPlot ({ data, width, height }) {
-  const svgRef = useRef();
-
+function BarChart ({ data }) {
+  const [height, setHeight] = useState(500);
+  const [width, setWidth] = useState(840);
 
   useEffect(() => {
-    if (data.length === 0) return;
-    const svg = d3.select(svgRef.current).attr("id","svg");
+    createBarChart();
+  }, [data]);
 
-    //define margins
-    const margin = { top: 20, right: 20, bottom: 50, left: 50 };
-    const chartWidth = width - margin.left - margin.right;
-    const chartHeight = height - margin.top - margin.bottom;
-    
-   /* //x-axis scale years
-    const xScale;
+  const createBarChart = () => {
+    //define axes
+    let x = d3.scaleLinear().range([0, width]);
+    x.domain([
+      d3.min(data, (d) => d.Year -1),
+      d3.max(data, (d) => d.Year + 1),
+    ]);
 
-    //y-axis scale time in minutes
-    const yScale;
+    let y = d3.scaleTime().range([0, height]);
+    //change up tim eformat so yAxis has time displayed
+    data.forEach(function (d) {
+      d.Place = +d.Place;
+      let parsedTime = d.Time.split(":");
+      d.Time = new Date(Date.UTC(1970, 0, 1, 0, parsedTime[0], parsedTime[1]));
+    });
 
-    //add x-axis
-    svg
-      .select('.x-axis');
+    y.domain(d3.extent(data, (d) => d.Time));
 
-    //add y-axis
-    svg
-      .select('.y-axis');
+    let timeFormat = d3.timeFormat("%M:%S");
 
-    //add dots, tooltip w/mouseover & mouseout functions
-    svg
-      .select('.dot');
+    let xAxis = d3.axisBottom(x).tickFormat(d3.format("d"));
+    let yAxis = d3.axisLeft(y).tickFormat(timeFormat);
 
-    //add x axis label
-    svg
-      .select('x-axis-label');
+    //define the div for tooltip
+    let div = d3
+      .select("body")
+      .append("div")
+      .attr("class", "tooltip")
+      .attr("id", "tooltip")
+      .style("opacity", 0);
 
-    //add y axis label
-    svg
-      .select('y-axis-label');*/
+      //define svg
+      let svg = d3
+        .select("svg")
+        .attr("width", width + 80)
+        .attr("height", height + 130)
+        .attr("class", "graph")
+        .append("g")
+        .attr("transform", "translate(" + 60 + "," + 100 + ")");
 
+        //make the axes
+        svg 
+          .append("g")
+          .attr("class", "x-axis")
+          .attr("id", "x-axis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis)
+          .append("text")
+          .attr("class", "x-axis-label")
+          .attr("x", width)
+          .attr("y", -6)
+          .style("text-anchor", "end")
+          .text("Year");
 
+        svg
+          .append('g')
+          .attr("class", "y-axis")
+          .attr("id", "y-axis")
+          .call(yAxis)
+          .append("text")
+          .attr("class", "label")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("Best Time in Minutes");
 
-  }, [data, width, height]);
+        //put in data points
+        svg
+          .selectAll(".dot")
+          .data(data)
+          .enter()
+          .append("circle")
+          .attr("class", "dot")
+          .attr("r", 6)
+          .attr("cx", function (d) {
+            return x(d.Year);
+          })
+          .attr("cy", function (d) {
+            return y(d.Time);
+          })
+          .attr("data-xvalue", function (d) {
+            return d.Year;
+          })
+          .attr("data-yvalue", function (d) {
+            return d.Time.toISOString();
+          })
+          .style("fill", function (d) {
+            return d.Doping !== "" ? "#ff2222" : "#ff8832";
+          })
+          .on("mouseover", function (d) {
+            div.style("opacity", 0.9);
+            div.attr("data-year", d.Year);
+            div
+              .html(
+                d.Name +
+                  ": " +
+                d.Nationality +
+                "<br/>" +
+                "Year: " +
+                d.Year +
+                ", Time: " +
+                timeFormat(d.Time) +
+                (d.Doping ? "<br/><br/>" + d.Doping : "")
+              )
+              .style("left", d3.scaleDivergingSqrt.pageX + "px")
+              .style("top", d3.scaleDivergingSqrt.pageY - 28 + "px")
+          })
+          .on("mouseout", function() {
+            div.style("opacity", 0);
+          });
+
+          //title
+          svg
+            .append("text")
+            .attr("id", "title")
+            .attr("x", width / 2)
+            .attr("y", 0)
+            .attr("text-anchor", "middle")
+            .style("font-size", "30px")
+            .text("Doping in Pro Bicycle Racing");
+
+          //subtitle
+          svg
+            .append("text")
+            .attr("x", width / 2)
+            .attr("y", 25)
+            .attr("text-anchor", "middle")
+            .style("font-size", "20px")
+            .text("35 Fastest Times up Alpe d'Huez");
+
+          let legendContainer = svg.append("g").attr("id", "legend");
+
+          let legend = legendContainer
+            .selectAll("#legend")
+            .data(["#ff2222", "#ff8832"])
+            .enter()
+            .append("g")
+            .attr("class", "legend-label")
+            .attr("transform", function (d, i) {
+              return "translate(0," + (height / 2 - i * 20) + ")";
+            });
+
+          legend
+            .append("rect")
+            .attr("x", width - 18)
+            .attr("width", 18)
+            .attr("height", 18)
+            .style("fill", (d) => d);
+
+          legend
+            .append("text")
+            .attr("x", width - 24)
+            .attr("y", 9)
+            .attr("dy", ".35em")
+            .style("text-anchor", "end")
+            .text(function (d) {
+              if (d == "#ff2222") {
+                return "Riders with doping allegations.";
+              } else {
+                return "No doping allegations.";
+              }
+            });
+
+  };
 
   return (
-    <svg ref={svgRef} width={width} height={height}>
-      <g id="x-axis" />
-      <g id="y-axis" />
-      <g className="dot" />
-      <text className="x-axis-label" textAnchor="middle" />
-      <text className="y-axis-label" textAnchor="middle" />
-    </svg>
-  )
+    <>
+      <svg width={width} height={height}></svg>
+    </>
+  );
 
 }
 
