@@ -36,6 +36,7 @@ function BarChart ({ data }) {
   }, [data]);
 
   const createBarChart = () => {
+    console.log(data);
     //define axes
     let x = d3.scaleLinear().range([0, width]);
     x.domain([
@@ -44,7 +45,7 @@ function BarChart ({ data }) {
     ]);
 
     let y = d3.scaleTime().range([0, height]);
-    //change up tim eformat so yAxis has time displayed
+    //change up time format so yAxis has time displayed
     data.forEach(function (d) {
       d.Place = +d.Place;
       let parsedTime = d.Time.split(":");
@@ -60,7 +61,7 @@ function BarChart ({ data }) {
 
     //define the div for tooltip
     let div = d3
-      .select("body")
+      .select(".visHolder")
       .append("div")
       .attr("class", "tooltip")
       .attr("id", "tooltip")
@@ -125,7 +126,7 @@ function BarChart ({ data }) {
           .style("fill", function (d) {
             return d.Doping !== "" ? "#ff2222" : "#ff8832";
           })
-          .on("mouseover", function (d) {
+          .on("mouseover", function (d, event) {
             div.style("opacity", 0.9);
             div.attr("data-year", d.Year);
             div
@@ -140,8 +141,8 @@ function BarChart ({ data }) {
                 timeFormat(d.Time) +
                 (d.Doping ? "<br/><br/>" + d.Doping : "")
               )
-              .style("left", d3.scaleDivergingSqrt.pageX + "px")
-              .style("top", d3.scaleDivergingSqrt.pageY - 28 + "px")
+              .style('left', (event.pageX +'px'))
+              .style('top', (event.pageY - 28 + 'px'));
           })
           .on("mouseout", function() {
             div.style("opacity", 0);
