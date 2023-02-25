@@ -136,7 +136,9 @@ function BarChart ({ data }) {
           .style("fill", function (d) {
             return d.Doping !== "" ? "#ff2222" : "#ff8832";
           })
-          .on("mouseover", function (d) {
+          .on("mouseover", function (event, d) {
+            console.log('event', event);
+            console.log('d', d);
             div.style("opacity", 0.9);
             div.attr("data-year", d.Year)
               .attr("id", "tooltip");
