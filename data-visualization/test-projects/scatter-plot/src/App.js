@@ -35,8 +35,18 @@ function BarChart ({ data }) {
     createBarChart();
   }, [data]);
 
+  const getParsedData=(data,specifier)=>{
+    return data.map((d)=> {
+        return d3.timeParse(specifier)(d.Time);
+    });
+  };
+
   const createBarChart = () => {
     console.log(data);
+
+    const specifier="%M:%S";
+    const parsedData=getParsedData(data,specifier);
+
     //define axes
     let x = d3.scaleLinear().range([0, width]);
     x.domain([
@@ -63,8 +73,8 @@ function BarChart ({ data }) {
     let div = d3
       .select(".visHolder")
       .append("div")
-      .attr("class", "tooltip")
-      .attr("id", "tooltip")
+      //.attr("class", "tooltip")
+      //.attr("id", "tooltip")
       .style("opacity", 0);
 
       //define svg
@@ -126,23 +136,17 @@ function BarChart ({ data }) {
           .style("fill", function (d) {
             return d.Doping !== "" ? "#ff2222" : "#ff8832";
           })
-          .on("mouseover", function (d, event) {
+          .on("mouseover", function (d) {
             div.style("opacity", 0.9);
-            div.attr("data-year", d.Year);
-            div
-              .html(
-                d.Name +
-                  ": " +
-                d.Nationality +
-                "<br/>" +
-                "Year: " +
-                d.Year +
-                ", Time: " +
-                timeFormat(d.Time) +
-                (d.Doping ? "<br/><br/>" + d.Doping : "")
-              )
-              .style('left', (event.pageX +'px'))
-              .style('top', (event.pageY - 28 + 'px'));
+            div.attr("data-year", d.Year)
+              .attr("id", "tooltip");
+            div.html(`
+                ${d.Name}: ${d.Nationality}<br/>
+                Year: ${d.Year}, Time: ${timeFormat(d.Time)}${
+                  d.Doping ? "<br/><br/>" + d.Doping : ""
+                }`)
+              .style('left', '10px')
+              .style('top', `${height}px`);
           })
           .on("mouseout", function() {
             div.style("opacity", 0);
