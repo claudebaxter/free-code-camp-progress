@@ -35,17 +35,8 @@ function BarChart ({ data }) {
     createBarChart();
   }, [data]);
 
-  const getParsedData=(data,specifier)=>{
-    return data.map((d)=> {
-        return d3.timeParse(specifier)(d.Time);
-    });
-  };
-
   const createBarChart = () => {
     console.log(data);
-
-    const specifier="%M:%S";
-    const parsedData=getParsedData(data,specifier);
 
     //define axes
     let x = d3.scaleLinear().range([0, width]);
@@ -73,8 +64,6 @@ function BarChart ({ data }) {
     let div = d3
       .select(".visHolder")
       .append("div")
-      //.attr("class", "tooltip")
-      //.attr("id", "tooltip")
       .style("opacity", 0);
 
       //define svg
@@ -148,7 +137,7 @@ function BarChart ({ data }) {
                   d.Doping ? "<br/><br/>" + d.Doping : ""
                 }`)
               .style('left', '10px')
-              .style('top', `${height}px`);
+              .style('top', `${height + 20}px`);
           })
           .on("mouseout", function() {
             div.style("opacity", 0);
