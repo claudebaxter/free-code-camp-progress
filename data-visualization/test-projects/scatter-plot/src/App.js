@@ -123,7 +123,7 @@ function BarChart ({ data }) {
             return d.Time.toISOString();
           })
           .style("fill", function (d) {
-            return d.Doping !== "" ? "#ff2222" : "#ff8832";
+            return d.Doping !== "" ? "#ff2222" : "#22ff22";
           })
           .on("mouseover", function (event, d) {
             console.log('event', event);
@@ -166,7 +166,7 @@ function BarChart ({ data }) {
 
           let legend = legendContainer
             .selectAll("#legend")
-            .data(["#ff2222", "#ff8832"])
+            .data(["#ff2222", "#22ff22"])
             .enter()
             .append("g")
             .attr("class", "legend-label")
