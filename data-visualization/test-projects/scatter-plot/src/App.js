@@ -29,7 +29,7 @@ function App() {
 
 function BarChart ({ data }) {
   const [height, setHeight] = useState(500);
-  const [width, setWidth] = useState(840);
+  const [width, setWidth] = useState(840);  
 
   useEffect(() => {
     createBarChart();
@@ -101,6 +101,55 @@ function BarChart ({ data }) {
           .attr("dy", ".71em")
           .style("text-anchor", "end")
           .text("Best Time in Minutes");
+        
+        //define separate g element for x & y axis gridlines
+        let xGrid = svg
+          .append("g")
+          .attr("class", "x-grid-lines")
+          .attr("transform", "translate(0," + height + ")");
+
+        let yGrid = svg.append("g").attr("class", "y-grid-lines");
+
+        //append x / y axis gridlines to g x/yGrid g element
+        xGrid
+          .selectAll(".x-grid-line")
+          .data(x.ticks())
+          .enter()
+          .append("line")
+          .attr("class", "x-grid-line")
+          .attr("x1", (d) => x(d))
+          .attr("y1", 0)
+          .attr("x2", (d) => x(d))
+          .attr("y2", -height);
+
+        yGrid
+          .selectAll(".y-grid-line")
+          .data(y.ticks())
+          .enter()
+          .append("line")
+          .attr("class", "y-grid-line")
+          .attr("x1", 0)
+          .attr("y1", (d) => y(d))
+          .attr("x2", width)
+          .attr("y2", (d) => y(d));
+
+        svg.select(".x-axis")
+          .selectAll("g.tick")
+          .append("line")
+          .attr("class", "x-grid-line")
+          .attr("x1", 0)
+          .attr("y1", 0)
+          .attr("x2", 0)
+          .attr("y2", -height);
+
+        svg.select(".y-axis")
+          .selectAll("g.tick")
+          .append("line")
+          .attr("class", "y-grid-line")
+          .attr("x1", 0)
+          .attr("y1", 0)
+          .attr("x2", width)
+          .attr("y2", 0);
 
         //put in data points
         svg

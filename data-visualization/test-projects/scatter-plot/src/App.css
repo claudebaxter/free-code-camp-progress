@@ -12,3 +12,13 @@
     transform: rotate(360deg);
   }
 }
+
+.x-grid-line {
+  stroke: #ddd;
+  stroke-width: 1px;
+}
+
+.y-grid-line {
+  stroke: #ddd;
+  stroke-width: 1px;
+}
