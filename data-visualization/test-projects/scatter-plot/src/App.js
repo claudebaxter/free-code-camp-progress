@@ -29,7 +29,8 @@ function App() {
 
 function BarChart ({ data }) {
   const [height, setHeight] = useState(500);
-  const [width, setWidth] = useState(840);  
+  const [width, setWidth] = useState(840);
+  const [padding, setPadding] = useState(40);  
 
   useEffect(() => {
     createBarChart();
@@ -41,20 +42,20 @@ function BarChart ({ data }) {
     //define axes
     let x = d3.scaleLinear().range([0, width]);
     x.domain([
-      d3.min(data, (d) => d.Year -1),
-      d3.max(data, (d) => d.Year + 1),
-    ]);
+      d3.min(data, (d) => d.Year), // -1),
+      d3.max(data, (d) => d.Year), // + 1),
+    ]).range([padding, width - padding]);
 
-    let y = d3.scaleTime().range([0, height]);
-    //change up time format so yAxis has time displayed
-    data.forEach(function (d) {
-      d.Place = +d.Place;
-      let parsedTime = d.Time.split(":");
-      d.Time = new Date(Date.UTC(1970, 0, 1, 0, parsedTime[0], parsedTime[1]));
-    });
-
-    y.domain(d3.extent(data, (d) => d.Time));
-
+    let y = d3.scaleTime()
+      .domain([
+        d3.min(data, (d) => {
+          return new Date(d.Seconds * 1000);
+        }),
+        d3.max(data, (d) => {
+          return new Date(d.Seconds * 1000);
+        }),
+      ])
+      .range([padding, height - padding]);
     let timeFormat = d3.timeFormat("%M:%S");
 
     let xAxis = d3.axisBottom(x).tickFormat(d3.format("d"));
@@ -78,29 +79,28 @@ function BarChart ({ data }) {
         //make the axes
         svg 
           .append("g")
-          .attr("class", "x-axis")
-          .attr("id", "x-axis")
-          .attr("transform", "translate(0," + height + ")")
           .call(xAxis)
-          .append("text")
-          .attr("class", "x-axis-label")
-          .attr("x", width)
-          .attr("y", -6)
-          .style("text-anchor", "end")
-          .text("Year");
+          .attr("id", "x-axis")
+          .attr("transform", "translate(0," + (height - padding) + ")")
+            .append("text")
+            .attr("class", "x-axis-label")
+            .attr("x", width)
+            .attr("y", -6)
+            .style("text-anchor", "end")
+            .text("Year"); //need to style label so it is visible
 
         svg
           .append('g')
-          .attr("class", "y-axis")
-          .attr("id", "y-axis")
           .call(yAxis)
-          .append("text")
-          .attr("class", "label")
-          .attr("transform", "rotate(-90)")
-          .attr("y", 6)
-          .attr("dy", ".71em")
-          .style("text-anchor", "end")
-          .text("Best Time in Minutes");
+          .attr("id", "y-axis")
+          .attr('transform', 'translate(' + padding + ', 0)')
+            .append("text")
+            .attr("class", "y-axis-label")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", ".71em")
+            .style("text-anchor", "end")
+            .text("Best Time in Minutes"); //need to style label so it is visible
         
         //define separate g element for x & y axis gridlines
         let xGrid = svg
@@ -118,9 +118,9 @@ function BarChart ({ data }) {
           .append("line")
           .attr("class", "x-grid-line")
           .attr("x1", (d) => x(d))
-          .attr("y1", 0)
+          .attr("y1", 0 - padding)
           .attr("x2", (d) => x(d))
-          .attr("y2", -height);
+          .attr("y2", -height + padding);
 
         yGrid
           .selectAll(".y-grid-line")
@@ -128,9 +128,9 @@ function BarChart ({ data }) {
           .enter()
           .append("line")
           .attr("class", "y-grid-line")
-          .attr("x1", 0)
+          .attr("x1", 0 + padding)
           .attr("y1", (d) => y(d))
-          .attr("x2", width)
+          .attr("x2", width - padding)
           .attr("y2", (d) => y(d));
 
         svg.select(".x-axis")
@@ -163,13 +163,13 @@ function BarChart ({ data }) {
             return x(d.Year);
           })
           .attr("cy", function (d) {
-            return y(d.Time);
+            return y(new Date(d.Seconds * 1000)) 
           })
           .attr("data-xvalue", function (d) {
             return d.Year;
           })
           .attr("data-yvalue", function (d) {
-            return d.Time.toISOString();
+            return new Date(d.Seconds * 1000);
           })
           .style("fill", function (d) {
             return d.Doping !== "" ? "#ff2222" : "#22ff22";
@@ -182,7 +182,7 @@ function BarChart ({ data }) {
               .attr("id", "tooltip");
             div.html(`
                 ${d.Name}: ${d.Nationality}<br/>
-                Year: ${d.Year}, Time: ${timeFormat(d.Time)}${
+                Year: ${d.Year}, Time: ${d.Time}${
                   d.Doping ? "<br/><br/>" + d.Doping : ""
                 }`)
               .style('left', '10px')
@@ -237,7 +237,7 @@ function BarChart ({ data }) {
             .attr("dy", ".35em")
             .style("text-anchor", "end")
             .text(function (d) {
-              if (d == "#ff2222") {
+              if (d === "#ff2222") {
                 return "Riders with doping allegations.";
               } else {
                 return "No doping allegations.";
