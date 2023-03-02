@@ -10,40 +10,70 @@ function App() {
       const response = await fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json');
       const data = await response.json();
       setData(data);
+      console.log("data", data);
     }
-    console.log("data", data);
     fetchData();
   }, []);
 
   return (
     <div className="App">
       <h1 id="title">Monthly Global Land-Surface Temperature</h1>
-      <div className="visHolder">
-        <Heatmap data={data}/>
-      </div>
+      <h4 id="description">Temperatures from 1753 - 2015. Average is 8.66℃</h4>
+      <Heatmap data={data}/>
     </div>
   );
 }
 
 function Heatmap ({ data }) {
-  const [height, setHeight] = useState(700);
-  const [width, setWidth] = useState(1000);
-  const [padding, setPadding] = useState(40);
+  const [height, setHeight] = useState(600);
+  const [width, setWidth] = useState(1200);
+  const [padding, setPadding] = useState(60);
 
   useEffect(() => {
     createHeatMap();
   }, [data]);
 
   const createHeatMap = () => {
-    console.log("data2", data);
+    console.log("baseTemperature", data.baseTemperature);
+    console.log("monthlyVariance", data.monthlyVariance);
+
+    let baseTemp 
+    let values = [];
+
+    let generateScales = () => {
+    
+    }
+    
+    let drawCanvas = () => {
+        svg.attr('width', width)
+        svg.attr('height', height)
+    }
+    
+    let drawCells = () => {
+      
+    }
+    
+    let generateAxes = () => {
+     
+    }
 
     //define axes scale xScale yScale
 
+    let xScale
+
+    let yScale 
+
     //define xAxis and yAxis
 
-    //add div for tooltip?
+    let xAxis
+
+    let yAxis 
 
     //define svg
+
+    let svg = d3.select('svg')
+
+    //add div for tooltip?
 
     //define gridlines
 
@@ -58,6 +88,12 @@ function Heatmap ({ data }) {
       //let legend = legendContainer.selectAll(#legend")....
       //append legend rects
       //append legend text
+
+    //call functions:
+    drawCanvas()
+    generateScales()
+    drawCells()
+    generateAxes()
   };
 
   return (

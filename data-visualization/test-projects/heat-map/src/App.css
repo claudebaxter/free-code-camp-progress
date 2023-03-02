@@ -12,3 +12,20 @@
     transform: rotate(360deg);
   }
 }
+
+body{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#title, #description {
+  display: flex;
+  margin: auto;
+  justify-content: center;
+}
+
+svg{
+  background-color: whitesmoke;
+}
