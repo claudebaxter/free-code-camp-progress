@@ -36,79 +36,66 @@ function Heatmap ({ data }) {
   const createHeatMap = () => {
     console.log("baseTemperature", data.baseTemperature);
     console.log("monthlyVariance", data.monthlyVariance);
-
+  
+    //check to verify that data has been fetched, to avoid
+    //passing empty array to functions below:
+    if (data.length === 0) {
+      return;
+    }
+  
     let baseTemp = data.baseTemperature;
     let values = data.monthlyVariance;
-
+    console.log('values', values);
+    console.log('baseTemp', baseTemp);
+    let xScale
+    let yScale 
+    let xAxis
+    let yAxis 
+    let svg = d3.select('svg')
+  
     let generateScales = () => {
       xScale = d3.scaleLinear()
           .range([padding, width - padding]);
-      
+        
       yScale = d3.scaleTime()
           .range([padding, height - padding])
     };
-    
-    let drawCanvas = () => {
-        svg.attr('width', width)
-        svg.attr('height', height)
-    };
-    
-    let drawCells = () => {
       
+    let drawCanvas = () => {
+      svg.attr('width', width)
+      svg.attr('height', height)
     };
-    
+      
+    let drawCells = (values) => {
+      svg.selectAll('rect')
+        .data(values)
+        .enter()
+        .append('rect')
+        .attr('class','cell')
+    };
+      
     let generateAxes = () => {
-     let xAxis = d3.axisBottom(xScale)
+      let xAxis = d3.axisBottom(xScale)
       svg.append('g')
         .call(xAxis)
         .attr('id', 'x-axis')
         .attr('transform', 'translate(0, ' + (height-padding) + ')');
-
-     let yAxis = d3.axisLeft(yScale)
+  
+      let yAxis = d3.axisLeft(yScale)
       svg.append('g')
         .call(yAxis)
         .attr('id', 'y-axis')
         .attr('transform', 'translate(' + padding + ', 0)')
     };
-
-    //define axes scale xScale yScale
-
-    let xScale
-
-    let yScale 
-
-    //define xAxis and yAxis
-
-    let xAxis
-
-    let yAxis 
-
-    //define svg
-
-    let svg = d3.select('svg')
-
-    //add div for tooltip?
-
-    //define gridlines
-
-    //svg.select(".x-axis & .y-axis")
-
-    //define data points (rectangles) on chart
-      //.on("mouseover / mouseout") functions for tooltip
-
-    //title & subtitle (svg.append("text"))
-
-    //let legendContainer = svg.append("g").attr("id", "legend");
-      //let legend = legendContainer.selectAll(#legend")....
-      //append legend rects
-      //append legend text
-
-    //call functions:
+  
     drawCanvas()
     generateScales()
-    drawCells()
+    if (values) {
+      drawCells(values)
+    }
     generateAxes()
   };
+  
 
   return (
     <>
