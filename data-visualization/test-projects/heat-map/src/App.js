@@ -74,15 +74,24 @@ function Heatmap ({ data }) {
         .attr('class','cell')
         .attr('fill', (item) => {
             let variance = item['variance']
-            if(variance <= -1){
+            if(variance <= -4){
                 return 'SteelBlue'
             }else if(variance <= 0){
                 return 'LightSteelBlue'
-            }else if(variance <= 1){
+            }else if(variance <= 2){
                 return 'Orange'
             }else{
                 return 'Crimson'
             }
+        })
+        .attr('data-year', (item) => {
+            return item
+        })
+        .attr('data-month', (item) => {
+            return item
+        })
+        .attr('data-temp', (item) => {
+            return item
         })
     };
       
