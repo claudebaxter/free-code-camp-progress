@@ -72,6 +72,18 @@ function Heatmap ({ data }) {
         .enter()
         .append('rect')
         .attr('class','cell')
+        .attr('fill', (item) => {
+            let variance = item['variance']
+            if(variance <= -1){
+                return 'SteelBlue'
+            }else if(variance <= 0){
+                return 'LightSteelBlue'
+            }else if(variance <= 1){
+                return 'Orange'
+            }else{
+                return 'Crimson'
+            }
+        })
     };
       
     let generateAxes = () => {
