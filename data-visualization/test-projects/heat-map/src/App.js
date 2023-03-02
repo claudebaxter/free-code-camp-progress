@@ -37,31 +37,39 @@ function Heatmap ({ data }) {
     console.log("baseTemperature", data.baseTemperature);
     console.log("monthlyVariance", data.monthlyVariance);
 
-    let baseTemp 
-    let values = [];
+    let baseTemp = data.baseTemperature;
+    let values = data.monthlyVariance;
 
     let generateScales = () => {
       xScale = d3.scaleLinear()
-          .range([padding, width - padding])
-    }
+          .range([padding, width - padding]);
+      
+      yScale = d3.scaleTime()
+          .range([padding, height - padding])
+    };
     
     let drawCanvas = () => {
         svg.attr('width', width)
         svg.attr('height', height)
-    }
+    };
     
     let drawCells = () => {
       
-    }
+    };
     
     let generateAxes = () => {
      let xAxis = d3.axisBottom(xScale)
-
       svg.append('g')
         .call(xAxis)
         .attr('id', 'x-axis')
-        .attr('transform', 'translate(0, ' + (height-padding) + ')')
-    }
+        .attr('transform', 'translate(0, ' + (height-padding) + ')');
+
+     let yAxis = d3.axisLeft(yScale)
+      svg.append('g')
+        .call(yAxis)
+        .attr('id', 'y-axis')
+        .attr('transform', 'translate(' + padding + ', 0)')
+    };
 
     //define axes scale xScale yScale
 
