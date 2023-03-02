@@ -41,7 +41,8 @@ function Heatmap ({ data }) {
     let values = [];
 
     let generateScales = () => {
-    
+      xScale = d3.scaleLinear()
+          .range([padding, width - padding])
     }
     
     let drawCanvas = () => {
@@ -54,7 +55,12 @@ function Heatmap ({ data }) {
     }
     
     let generateAxes = () => {
-     
+     let xAxis = d3.axisBottom(xScale)
+
+      svg.append('g')
+        .call(xAxis)
+        .attr('id', 'x-axis')
+        .attr('transform', 'translate(0, ' + (height-padding) + ')')
     }
 
     //define axes scale xScale yScale
