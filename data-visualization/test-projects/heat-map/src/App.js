@@ -85,13 +85,13 @@ function Heatmap ({ data }) {
             }
         })
         .attr('data-year', (item) => {
-            return item
+          return item['year']
         })
         .attr('data-month', (item) => {
-            return item
+            return item['month'] - 1
         })
         .attr('data-temp', (item) => {
-            return item
+            return baseTemp + item['variance']
         })
     };
       
