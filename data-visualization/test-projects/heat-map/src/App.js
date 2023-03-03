@@ -54,12 +54,19 @@ function Heatmap ({ data }) {
     let svg = d3.select('svg')
   
     let generateScales = () => {
+      let minYear = d3.min(values, (item) => {
+          return item['year']
+      })
+      let maxYear = d3.max(values, (item) => {
+          return item['year']
+      })
       xScale = d3.scaleLinear()
+          .domain([minYear, maxYear + 1])
           .range([padding, width - padding]);
         
-          yScale = d3.scaleTime()
+      yScale = d3.scaleTime()
           .domain([new Date(0,0,0,0, 0, 0, 0), new Date(0,12,0,0,0,0,0)])
-          .range([padding, height - padding])
+          .range([padding, height - padding]);
     };
       
     let drawCanvas = () => {
@@ -95,15 +102,33 @@ function Heatmap ({ data }) {
             return baseTemp + item['variance']
         })
         .attr('height', (item)=> {
+          console.log("item1", item);
           return (height - (2 * padding)) / 12
         })
         .attr('y', (item) => {
             return yScale(new Date(0, item['month']-1, 0, 0, 0, 0, 0))
         })
+        .attr('width', (item) => {
+          console.log("item2", item);
+          let minYear = d3.min(values, (item) => {
+              return item['year']
+          })
+          
+          let maxYear = d3.max(values, (item) => {
+              return item['year']
+          })
+      
+          let yearCount = maxYear - minYear
+      
+          return (width - (2 * padding)) / yearCount
+        })
+        .attr('x', (item) => {
+            return xScale(item['year'])
+        })
     };
       
     let generateAxes = () => {
-      let xAxis = d3.axisBottom(xScale)
+      let xAxis = d3.axisBottom(xScale).tickFormat(d3.format('d'))
       svg.append('g')
         .call(xAxis)
         .attr('id', 'x-axis')
