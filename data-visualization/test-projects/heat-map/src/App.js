@@ -102,14 +102,12 @@ function Heatmap ({ data }) {
             return baseTemp + item['variance']
         })
         .attr('height', (item)=> {
-          console.log("item1", item);
           return (height - (2 * padding)) / 12
         })
         .attr('y', (item) => {
             return yScale(new Date(0, item['month']-1, 0, 0, 0, 0, 0))
         })
         .attr('width', (item) => {
-          console.log("item2", item);
           let minYear = d3.min(values, (item) => {
               return item['year']
           })
@@ -152,7 +150,25 @@ function Heatmap ({ data }) {
 
   return (
     <>
-      <svg width={width} height={height} padding={padding}></svg>
+      <svg id="canvas" width={width} height={height} padding={padding}></svg>
+      <svg id='legend'>
+        <g>
+            <rect x="10" y="0" width="40" height="40" fill="SteelBlue"></rect>
+            <text x="60" y="20" fill="white">Variance of -1 or less</text>
+        </g>
+        <g>
+            <rect x="10" y="40" width="40" height="40" fill="LightSteelBlue"></rect>
+            <text x="60" y="60" fill="white">On or Below Average</text>
+        </g>
+        <g>
+            <rect x="10" y="80" width="40" height="40" fill="Orange"></rect>
+            <text x="60" y="100" fill="white">Above Average</text>
+        </g>
+        <g>
+            <rect x="10" y="120" width="40" height="40" fill="Crimson"></rect>
+            <text x="60" y="140" fill="white">Variance of +1 or more</text>
+        </g>
+    </svg>
     </>
   )
 

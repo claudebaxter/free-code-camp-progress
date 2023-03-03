@@ -26,6 +26,13 @@ body{
   justify-content: center;
 }
 
-svg{
+#canvas{
   background-color: whitesmoke;
+}
+
+#legend{
+  position: absolute;
+  bottom: -75px;
+  left: 50%;
+  transform: translateX(-50%);
 }
