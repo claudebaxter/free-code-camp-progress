@@ -19,6 +19,7 @@ function App() {
     <div className="App">
       <h1 id="title">Monthly Global Land-Surface Temperature</h1>
       <h4 id="description">Temperatures from 1753 - 2015. Average is 8.66℃</h4>
+      <div id="tooltip"></div>
       <Heatmap data={data}/>
     </div>
   );
@@ -52,6 +53,7 @@ function Heatmap ({ data }) {
     let xAxis
     let yAxis 
     let svg = d3.select('svg')
+    let tooltip = d3.select('#tooltip')
   
     let generateScales = () => {
       let minYear = d3.min(values, (item) => {
@@ -82,11 +84,11 @@ function Heatmap ({ data }) {
         .attr('class','cell')
         .attr('fill', (item) => {
             let variance = item['variance']
-            if(variance <= -4){
+            if(variance <= -1){
                 return 'SteelBlue'
             }else if(variance <= 0){
                 return 'LightSteelBlue'
-            }else if(variance <= 2){
+            }else if(variance <= 1){
                 return 'Orange'
             }else{
                 return 'Crimson'
@@ -123,6 +125,22 @@ function Heatmap ({ data }) {
         .attr('x', (item) => {
             return xScale(item['year'])
         })
+        .on('mouseover', function (event, item) {
+          tooltip.transition()
+              .style('visibility', 'visible')
+          
+          let monthNames = ["January", "February", "March", "April", "May", "June",
+          "July", "August", "September", "October", "November", "December"]
+      
+          tooltip.text(item['year'] + ' ' + monthNames[item['month'] -1 ] + ' : ' + item['variance'])
+
+          tooltip.attr('data-year', item['year'])
+        })
+        .on('mouseout', function() {
+          tooltip.style('visibility', 'hidden');
+
+        })
+      
     };
       
     let generateAxes = () => {

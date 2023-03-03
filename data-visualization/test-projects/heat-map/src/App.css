@@ -26,13 +26,20 @@ body{
   justify-content: center;
 }
 
+#tooltip{
+  visibility: hidden;
+  height: auto;
+  width: auto;
+}
+
 #canvas{
   background-color: whitesmoke;
 }
 
+/* commenting out to move legend to right of map for now.
 #legend{
   position: absolute;
   bottom: -75px;
   left: 50%;
   transform: translateX(-50%);
-}
+}*/
