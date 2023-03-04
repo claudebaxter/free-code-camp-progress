@@ -63,6 +63,22 @@ function ChoroplethMap ({ eduData, couData }) {
         .append('path')
         .attr('d', d3.geoPath())
         .attr('class', 'county')
+        .attr('fill', (item) => {
+          let fips = item['id']
+          let county = educationData.find((county) => {
+              return county['fips'] === fips
+          })
+          let percentage = county['bachelorsOrHigher']
+          if (percentage <= 15){
+              return 'tomato'
+          }else if (percentage <= 30){
+              return 'orange'
+          } else if (percentage <= 45){
+              return 'lightgreen'
+          } else {
+              return 'limegreen'
+          }
+        })
     }
 
     drawMap();
