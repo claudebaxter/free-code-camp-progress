@@ -1,4 +1,4 @@
-#title, #description {
+#title, #description, #canvas {
   display: flex;
   margin: auto;
   justify-content: center;

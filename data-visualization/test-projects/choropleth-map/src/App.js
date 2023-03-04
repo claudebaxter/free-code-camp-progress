@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import * as d3 from 'd3';
+import * as topojson from 'topojson-client';
 import './App.css';
 
 function App() {
@@ -36,26 +37,32 @@ function ChoroplethMap ({ eduData, couData }) {
   const [padding, setPadding] = useState(60);
 
   useEffect(() => {
-    createMap();
+    createChoroplethMap();
   }, [eduData, couData]);
 
-  const createMap = () => {
-    console.log("eduData", eduData);
-    console.log("couData", couData);
+  const createChoroplethMap = () => {
 
     //check to verify that data has been fetched, to avoid
     //passing empty array or object functions below:
     if (eduData.length === 0) {
       return;
-    } else if (couData.length === 0) { return; }
+    } else if (Object.keys(couData).length === 0) { return; }
 
-    let countyData = couData;
+    let countyData = topojson.feature(couData, couData.objects.counties).features;
     let educationData = eduData;
+
+    console.log("countyData", countyData);
+    console.log("educationData", educationData);
 
     let canvas = d3.select('#canvas')
 
     let drawMap = () => {
-    
+      canvas.selectAll('path')
+        .data(countyData)
+        .enter()
+        .append('path')
+        .attr('d', d3.geoPath())
+        .attr('class', 'county')
     }
 
     drawMap();
