@@ -79,6 +79,17 @@ function ChoroplethMap ({ eduData, couData }) {
               return 'limegreen'
           }
         })
+        .attr('data-fips', (item) => {
+          return item['id']
+      })
+      .attr('data-education', (item) => {
+          let fips = item['id']
+          let county = educationData.find((county) => {
+              return county['fips'] === fips
+          })
+          let percentage = county['bachelorsOrHigher']
+          return percentage
+      })
     }
 
     drawMap();
