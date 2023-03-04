@@ -36,7 +36,15 @@ body{
   background-color: whitesmoke;
 }
 
-/* commenting out to move legend to right of map for now.
+#legend {
+  position: absolute;
+  top: 50%;
+  right: -70px;
+  transform: translateY(-50%);
+}
+
+/* commenting out to move legend to center/right of map for now.
+(this css element positions the legend in the bottom center."
 #legend{
   position: absolute;
   bottom: -75px;

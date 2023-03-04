@@ -172,19 +172,19 @@ function Heatmap ({ data }) {
       <svg id='legend'>
         <g>
             <rect x="10" y="0" width="40" height="40" fill="SteelBlue"></rect>
-            <text x="60" y="20" fill="white">Variance of -1 or less</text>
+            <text x="60" y="20" fill="black">Variance of -1 or less</text>
         </g>
         <g>
             <rect x="10" y="40" width="40" height="40" fill="LightSteelBlue"></rect>
-            <text x="60" y="60" fill="white">On or Below Average</text>
+            <text x="60" y="60" fill="black">On or Below Average</text>
         </g>
         <g>
             <rect x="10" y="80" width="40" height="40" fill="Orange"></rect>
-            <text x="60" y="100" fill="white">Above Average</text>
+            <text x="60" y="100" fill="black">Above Average</text>
         </g>
         <g>
             <rect x="10" y="120" width="40" height="40" fill="Crimson"></rect>
-            <text x="60" y="140" fill="white">Variance of +1 or more</text>
+            <text x="60" y="140" fill="black">Variance of +1 or more</text>
         </g>
     </svg>
     </>
