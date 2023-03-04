@@ -1,12 +1,70 @@
-import logo from './logo.svg';
+import { useState, useEffect } from 'react';
+import * as d3 from 'd3';
 import './App.css';
 
 function App() {
+  const [educationData, setEducationData] = useState([]);
+  const [countyData, setCountyData] = useState({});
+
+  useEffect(() => {
+    async function fetchData() {
+    const educationResponse = await fetch('https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/for_user_education.json');
+    const eduData = await educationResponse.json();
+    setEducationData(eduData);
+    console.log("Education Data", educationData);
+  
+    const couResponse = await fetch('https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/counties.json');
+    const couData = await couResponse.json();
+    setCountyData(couData);
+    console.log("County Data", countyData);
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="App">
-      
+      <h2 id='title'>United States Adult Education</h2>
+      <div id='description'>Percentage of adults age 25 and older with a bachelor's degree or higher (2010-2014). Source: <a href='https://www.ers.usda.gov/data-products/county-level-data-sets/download-data.aspx'>USDA Economic Research Service</a></div>
+      <ChoroplethMap eduData={educationData} couData={countyData} />
     </div>
   );
+}
+
+function ChoroplethMap ({ eduData, couData }) {
+  const [height, setHeight] = useState(600);
+  const [width, setWidth] = useState(1000);
+  const [padding, setPadding] = useState(60);
+
+  useEffect(() => {
+    createMap();
+  }, [eduData, couData]);
+
+  const createMap = () => {
+    console.log("eduData", eduData);
+    console.log("couData", couData);
+
+    //check to verify that data has been fetched, to avoid
+    //passing empty array or object functions below:
+    if (eduData.length === 0) {
+      return;
+    } else if (couData.length === 0) { return; }
+
+    let countyData = couData;
+    let educationData = eduData;
+
+    let canvas = d3.select('#canvas')
+
+    let drawMap = () => {
+    
+    }
+
+    drawMap();
+  }
+  return (
+    <>
+      <svg id="canvas" width={width} height={height} padding={padding}></svg>
+    </>
+  )
 }
 
 export default App;
