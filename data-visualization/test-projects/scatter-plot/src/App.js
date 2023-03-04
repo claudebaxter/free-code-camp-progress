@@ -28,8 +28,8 @@ function App() {
 }
 
 function BarChart ({ data }) {
-  const [height, setHeight] = useState(500);
-  const [width, setWidth] = useState(840);
+  const [height, setHeight] = useState(600);
+  const [width, setWidth] = useState(800);
   const [padding, setPadding] = useState(40);  
 
   useEffect(() => {
@@ -39,216 +39,129 @@ function BarChart ({ data }) {
   const createBarChart = () => {
     console.log(data);
 
-    //define axes
-    let x = d3.scaleLinear().range([0, width]);
-    x.domain([
-      d3.min(data, (d) => d.Year), // -1),
-      d3.max(data, (d) => d.Year), // + 1),
-    ]).range([padding, width - padding]);
+    //check to verify that data has been fetched, to avoid
+    //passing empty array to functions below:
+    if (data.length === 0) {
+      return;
+    }
 
-    let y = d3.scaleTime()
-      .domain([
-        d3.min(data, (d) => {
-          return new Date(d.Seconds * 1000);
-        }),
-        d3.max(data, (d) => {
-          return new Date(d.Seconds * 1000);
-        }),
-      ])
-      .range([padding, height - padding]);
-    let timeFormat = d3.timeFormat("%M:%S");
+    let values = data;
+    console.log('values', data);
+    let xScale
+    let yScale
+    let xAxis
+    let yAxis
+    let svg = d3.select('svg')
+    let tooltip = d3.select('#tooltip')
 
-    let xAxis = d3.axisBottom(x).tickFormat(d3.format("d"));
-    let yAxis = d3.axisLeft(y).tickFormat(timeFormat);
+    let generateScales = () => {
+      xScale = d3.scaleLinear()
+        .domain([d3.min(values, (item) => {
+            return item['Year']
+        }) - 1 , d3.max(values, (item) => {
+            return item['Year']
+        }) + 1])
+        .range([padding, width-padding]);
 
-    //define the div for tooltip
-    let div = d3
-      .select(".visHolder")
-      .append("div")
-      .style("opacity", 0);
+      yScale = d3.scaleTime()
+        .domain([d3.min(values, (item) => {
+            return new Date(item['Seconds'] * 1000)
+        }), d3.max(values, (item) => {
+            return new Date(item['Seconds'] * 1000)
+        })])
+        .range([padding, height-padding]);
+    };
 
-      //define svg
-      let svg = d3
-        .select("svg")
-        .attr("width", width + 80)
-        .attr("height", height + 130)
-        .attr("class", "graph")
-        .append("g")
-        .attr("transform", "translate(" + 60 + "," + 100 + ")");
+    let drawCanvas = () => {
+      svg.attr('width', width)
+      svg.attr('height', height)
+    };
 
-        //make the axes
-        svg 
-          .append("g")
-          .call(xAxis)
-          .attr("id", "x-axis")
-          .attr("transform", "translate(0," + (height - padding) + ")")
-            .append("text")
-            .attr("class", "x-axis-label")
-            .attr("x", width)
-            .attr("y", -6)
-            .style("text-anchor", "end")
-            .text("Year"); //need to style label so it is visible
-
-        svg
-          .append('g')
-          .call(yAxis)
-          .attr("id", "y-axis")
-          .attr('transform', 'translate(' + padding + ', 0)')
-            .append("text")
-            .attr("class", "y-axis-label")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", ".71em")
-            .style("text-anchor", "end")
-            .text("Best Time in Minutes"); //need to style label so it is visible
-        
-        //define separate g element for x & y axis gridlines
-        let xGrid = svg
-          .append("g")
-          .attr("class", "x-grid-lines")
-          .attr("transform", "translate(0," + height + ")");
-
-        let yGrid = svg.append("g").attr("class", "y-grid-lines");
-
-        //append x / y axis gridlines to g x/yGrid g element
-        xGrid
-          .selectAll(".x-grid-line")
-          .data(x.ticks())
-          .enter()
-          .append("line")
-          .attr("class", "x-grid-line")
-          .attr("x1", (d) => x(d))
-          .attr("y1", 0 - padding)
-          .attr("x2", (d) => x(d))
-          .attr("y2", -height + padding);
-
-        yGrid
-          .selectAll(".y-grid-line")
-          .data(y.ticks())
-          .enter()
-          .append("line")
-          .attr("class", "y-grid-line")
-          .attr("x1", 0 + padding)
-          .attr("y1", (d) => y(d))
-          .attr("x2", width - padding)
-          .attr("y2", (d) => y(d));
-
-        svg.select(".x-axis")
-          .selectAll("g.tick")
-          .append("line")
-          .attr("class", "x-grid-line")
-          .attr("x1", 0)
-          .attr("y1", 0)
-          .attr("x2", 0)
-          .attr("y2", -height);
-
-        svg.select(".y-axis")
-          .selectAll("g.tick")
-          .append("line")
-          .attr("class", "y-grid-line")
-          .attr("x1", 0)
-          .attr("y1", 0)
-          .attr("x2", width)
-          .attr("y2", 0);
-
-        //put in data points
-        svg
-          .selectAll(".dot")
-          .data(data)
-          .enter()
-          .append("circle")
-          .attr("class", "dot")
-          .attr("r", 6)
-          .attr("cx", function (d) {
-            return x(d.Year);
-          })
-          .attr("cy", function (d) {
-            return y(new Date(d.Seconds * 1000)) 
-          })
-          .attr("data-xvalue", function (d) {
-            return d.Year;
-          })
-          .attr("data-yvalue", function (d) {
-            return new Date(d.Seconds * 1000);
-          })
-          .style("fill", function (d) {
-            return d.Doping !== "" ? "#ff2222" : "#22ff22";
-          })
-          .on("mouseover", function (event, d) {
-            console.log('event', event);
-            console.log('d', d);
-            div.style("opacity", 0.9);
-            div.attr("data-year", d.Year)
-              .attr("id", "tooltip");
-            div.html(`
-                ${d.Name}: ${d.Nationality}<br/>
-                Year: ${d.Year}, Time: ${d.Time}${
-                  d.Doping ? "<br/><br/>" + d.Doping : ""
-                }`)
-              .style('left', '10px')
-              .style('top', `${height + 20}px`);
-          })
-          .on("mouseout", function() {
-            div.style("opacity", 0);
-          });
-
-          //title
-          svg
-            .append("text")
-            .attr("id", "title")
-            .attr("x", width / 2)
-            .attr("y", 0)
-            .attr("text-anchor", "middle")
-            .style("font-size", "30px")
-            .text("Doping in Pro Bicycle Racing");
-
-          //subtitle
-          svg
-            .append("text")
-            .attr("x", width / 2)
-            .attr("y", 25)
-            .attr("text-anchor", "middle")
-            .style("font-size", "20px")
-            .text("35 Fastest Times up Alpe d'Huez");
-
-          let legendContainer = svg.append("g").attr("id", "legend");
-
-          let legend = legendContainer
-            .selectAll("#legend")
-            .data(["#ff2222", "#22ff22"])
+    let drawPoint = (values) => {
+      svg.selectAll('circle')
+            .data(values)
             .enter()
-            .append("g")
-            .attr("class", "legend-label")
-            .attr("transform", function (d, i) {
-              return "translate(0," + (height / 2 - i * 20) + ")";
-            });
+            .append('circle')
+            .attr('class', 'dot')
+            .attr('r', '5')
+            .attr('data-xvalue', (item) => {
+                return item['Year']
+            })
+            .attr('data-yvalue', (item) => {
+                return new Date(item['Seconds'] * 1000)
+            })
+          .attr('cx', (item) => {
+              return xScale(item['Year'])
+          })         
+            .attr('cy', (item) => {
+                return yScale(new Date(item['Seconds'] * 1000))
+            })
+            .attr('fill', (item) => {
+                if(item['URL'] === ""){
+                    return 'lightgreen'
+                }else{
+                    return 'orange'
+                }
+            })
+            .on('mouseover', function (event, item) {
+                tooltip.transition()
+                    .style('visibility', 'visible')
+                
+                if(item['Doping'] != ""){
+                    tooltip.text(item['Year'] + ' - ' + item['Name'] + ' - ' + item['Time'] + ' - ' + item['Doping'])
+                }else{
+                    tooltip.text(item['Year'] + ' - ' + item['Name'] + ' - ' + item['Time'] + ' - ' + 'No Allegations')
+                }
+                
+                tooltip.attr('data-year', item['Year'])
+            })
+            .on('mouseout', function (item) {
+                tooltip.transition()
+                    .style('visibility', 'hidden')
+            })
+    };
 
-          legend
-            .append("rect")
-            .attr("x", width - 18)
-            .attr("width", 18)
-            .attr("height", 18)
-            .style("fill", (d) => d);
+    let generateAxes = () => {
+      xAxis = d3.axisBottom(xScale)
+        .tickFormat(d3.format('d'));
+                
 
-          legend
-            .append("text")
-            .attr("x", width - 24)
-            .attr("y", 9)
-            .attr("dy", ".35em")
-            .style("text-anchor", "end")
-            .text(function (d) {
-              if (d === "#ff2222") {
-                return "Riders with doping allegations.";
-              } else {
-                return "No doping allegations.";
-              }
-            });
+      yAxis = d3.axisLeft(yScale)
+        .tickFormat(d3.timeFormat('%M:%S'));
 
+
+      svg.append('g')
+        .call(xAxis)
+        .attr('id', 'x-axis')
+        .attr('transform', 'translate(0, ' + (height-padding) +')');
+
+      svg.append('g')
+        .call(yAxis)
+        .attr('id', 'y-axis')
+        .attr('transform','translate(' + padding + ', 0)');
+    };
+
+
+
+    drawCanvas()
+    generateScales()
+    if (values) {
+      drawPoint(values)
+    }
+    generateAxes()
   };
 
   return (
     <>
-      <svg width={width} height={height}></svg>
+      <svg id="canvas" width={width} height={height} padding={padding}>
+        <text id='title' y='20' x='150'>Doping in Professional Bicycle Racing</text>
+      </svg>
+      <div id='legend'>
+        YEAR (x) vs TIME (Y) <br />
+        Orange = Doping Allegation <br />
+        Green = No Doping Allegations
+      </div>
+      <div id="tooltip"></div>
     </>
   );
 
