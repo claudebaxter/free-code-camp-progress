@@ -72,13 +72,13 @@ function ChoroplethMap ({ eduData, couData }) {
           })
           let percentage = county['bachelorsOrHigher']
           if (percentage <= 15){
-              return 'tomato'
+              return 'crimson'
           }else if (percentage <= 30){
               return 'orange'
           } else if (percentage <= 45){
-              return 'lightgreen'
+              return 'lightsteelblue'
           } else {
-              return 'limegreen'
+              return 'steelblue'
           }
         })
         .attr('data-fips', (item) => {
@@ -118,7 +118,7 @@ function ChoroplethMap ({ eduData, couData }) {
       <svg id="canvas" width={width} height={height} padding={padding}></svg>
       <svg id="legend">
         <g>
-         <rect x="10" y="0" width="40" height="40" fill="tomato"></rect>
+         <rect x="10" y="0" width="40" height="40" fill="crimson"></rect>
          <text x="60" y="20" fill="black">Less than 15%</text>
        </g>
        <g>
@@ -126,11 +126,11 @@ function ChoroplethMap ({ eduData, couData }) {
          <text x="60" y="60" fill="black">15% to 30%</text>
         </g>
         <g>
-          <rect x="10" y="80" width="40" height="40" fill="lightgreen"></rect>
+          <rect x="10" y="80" width="40" height="40" fill="lightsteelblue"></rect>
           <text x="60" y="100" fill="black">30% to 45%</text>
         </g>
         <g>
-          <rect x="10" y="120" width="40" height="40" fill="limegreen"></rect>
+          <rect x="10" y="120" width="40" height="40" fill="steelblue"></rect>
           <text x="60" y="140" fill="black">More than 45%</text>
         </g>
       </svg>
