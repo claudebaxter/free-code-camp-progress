@@ -26,6 +26,7 @@ function App() {
     <div className="App">
       <h2 id='title'>United States Adult Education</h2>
       <div id='description'>Percentage of adults age 25 and older with a bachelor's degree or higher (2010-2014). Source: <a href='https://www.ers.usda.gov/data-products/county-level-data-sets/download-data.aspx'>USDA Economic Research Service</a></div>
+      <div id="tooltip"></div>
       <ChoroplethMap eduData={educationData} couData={countyData} />
     </div>
   );
@@ -55,6 +56,7 @@ function ChoroplethMap ({ eduData, couData }) {
     console.log("educationData", educationData);
 
     let canvas = d3.select('#canvas')
+    let tooltip = d3.select('#tooltip')
 
     let drawMap = () => {
       canvas.selectAll('path')
@@ -90,6 +92,23 @@ function ChoroplethMap ({ eduData, couData }) {
           let percentage = county['bachelorsOrHigher']
           return percentage
       })
+      .on('mouseover', function (event, countyDataItem) {
+        tooltip.transition()
+                .style('visibility', 'visible')
+    
+        let fips = countyDataItem['id']
+        let county = educationData.find((county) => {
+            return county['fips'] === fips
+        })
+    
+        tooltip.text(county['fips'] + ' - ' + county['area_name'] + ', ' + 
+            county['state'] + ' : ' + county['bachelorsOrHigher'] + '%')
+        })
+        .on('mouseout', function (countyDataItem) {
+            tooltip.transition()
+                    .style('visibility', 'hidden')
+        })
+    
     }
 
     drawMap();

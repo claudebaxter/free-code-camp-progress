@@ -4,6 +4,26 @@
   justify-content: center;
 }
 
+#tooltip {
+  position: fixed;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+}
+
+#tooltip{
+  visibility: hidden;
+  height: auto;
+  width: auto;
+}
+
+#legend {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
