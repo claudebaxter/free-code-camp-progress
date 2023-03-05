@@ -103,12 +103,12 @@ function ChoroplethMap ({ eduData, couData }) {
     
         tooltip.text(county['fips'] + ' - ' + county['area_name'] + ', ' + 
             county['state'] + ' : ' + county['bachelorsOrHigher'] + '%')
+        tooltip.attr('data-education', county['bachelorsOrHigher'] )
         })
         .on('mouseout', function (countyDataItem) {
             tooltip.transition()
                     .style('visibility', 'hidden')
         })
-    
     }
 
     drawMap();
@@ -123,7 +123,7 @@ function ChoroplethMap ({ eduData, couData }) {
        </g>
        <g>
          <rect x="10" y="40" width="40" height="40" fill="orange"></rect>
-         <text x="60" y="60" fill="black">15% than 30%</text>
+         <text x="60" y="60" fill="black">15% to 30%</text>
         </g>
         <g>
           <rect x="10" y="80" width="40" height="40" fill="lightgreen"></rect>
