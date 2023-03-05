@@ -97,6 +97,24 @@ function ChoroplethMap ({ eduData, couData }) {
   return (
     <>
       <svg id="canvas" width={width} height={height} padding={padding}></svg>
+      <svg id="legend">
+        <g>
+         <rect x="10" y="0" width="40" height="40" fill="tomato"></rect>
+         <text x="60" y="20" fill="black">Less than 15%</text>
+       </g>
+       <g>
+         <rect x="10" y="40" width="40" height="40" fill="orange"></rect>
+         <text x="60" y="60" fill="black">15% than 30%</text>
+        </g>
+        <g>
+          <rect x="10" y="80" width="40" height="40" fill="lightgreen"></rect>
+          <text x="60" y="100" fill="black">30% to 45%</text>
+        </g>
+        <g>
+          <rect x="10" y="120" width="40" height="40" fill="limegreen"></rect>
+          <text x="60" y="140" fill="black">More than 45%</text>
+        </g>
+      </svg>
     </>
   )
 }
