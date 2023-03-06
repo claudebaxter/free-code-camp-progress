@@ -74,6 +74,9 @@ function TreemapDiagram ({ pledgeData, movieSales, gameSales }) {
                 .data(movieTiles)
                 .enter()
                 .append('g')
+                .attr('transform', (movie) => {
+	                return 'translate (' + movie['x0'] + ', ' + movie['y0'] +')'
+	              })
 
       block.append('rect')
             .attr('class', 'tile')
@@ -104,6 +107,19 @@ function TreemapDiagram ({ pledgeData, movieSales, gameSales }) {
           .attr('data-value', (movie) => {
               return movie['data']['value']
           })
+          .attr('width', (movie) => {
+              return movie['x1'] - movie['x0']
+          })
+          .attr('height', (movie) => {
+              return movie['y1'] - movie['y0']
+          })
+      
+    block.append('text')
+          .text((movie) => {
+              return movie['data']['name']
+          })
+          .attr('x', 5)
+          .attr('y', 30)
 
     }
 
