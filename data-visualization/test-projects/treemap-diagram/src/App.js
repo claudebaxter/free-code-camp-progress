@@ -77,6 +77,24 @@ function TreemapDiagram ({ pledgeData, movieSales, gameSales }) {
 
       block.append('rect')
             .attr('class', 'tile')
+            .attr('fill', (movie) => {
+              let category = movie['data']['category']
+              if(category === 'Action'){
+                  return 'orange'
+              }else if(category === 'Drama'){
+                  return 'lightgreen'
+              }else if(category === 'Adventure'){
+                  return 'crimson'
+              }else if(category === 'Family'){
+                  return 'steelblue'
+              }else if(category === 'Animation'){
+                  return 'pink'
+              }else if(category === 'Comedy'){
+                  return 'khaki'
+              }else if(category === 'Biography'){
+                  return 'tan'
+              }
+          })
 
     }
 
