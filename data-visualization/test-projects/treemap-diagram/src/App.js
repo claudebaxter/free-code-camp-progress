@@ -95,6 +95,15 @@ function TreemapDiagram ({ pledgeData, movieSales, gameSales }) {
                   return 'tan'
               }
           })
+          .attr('data-name', (movie) => {
+              return movie['data']['name']
+          })
+          .attr('data-category', (movie) => {
+              return movie['data']['category']
+          })
+          .attr('data-value', (movie) => {
+              return movie['data']['value']
+          })
 
     }
 
