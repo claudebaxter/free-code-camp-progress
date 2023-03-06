@@ -48,15 +48,43 @@ function TreemapDiagram ({ pledgeData, movieSales, gameSales }) {
       return;
     } else if (Object.keys(gameSales).length === 0) { return; }
 
-    //declare / assign variables
+    let movieData = movieSales;
+    let canvas = d3.select('#canvas');
+    //let tooltip = d3.select('#tooltip');
+    
 
     //set up call back functions = () => {}
+    let drawTreeMap = () => {
+      let hierarchy = d3.hierarchy(movieData,
+        (node) => {
+          return node['children']
+        }).sum((node) => {
+          return node['value']
+        }).sort((node1, node2) => {
+          return node2['value'] - node1['value']})
+      
+      d3.treemap()
+        .size([1000,600])
+        (hierarchy)
+      
+      let movieTiles = hierarchy.leaves()
+      console.log(movieTiles)
 
-    //call functions
+      let block = canvas.selectAll('g')
+                .data(movieTiles)
+                .enter()
+                .append('g')
+
+      block.append('rect')
+            .attr('class', 'tile')
+
+    }
+
 
     console.log("pledge data", pledgeData);
     console.log("movie sales", movieSales);
     console.log("game sales", gameSales);
+    drawTreeMap();
   }
   return (
     <>
