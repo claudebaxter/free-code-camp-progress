@@ -121,6 +121,7 @@ function TreemapDiagram ({ pledgeData, movieSales, gameSales }) {
             tooltip.text(
                 movieData['name'] + ' : $' + movieData['value']
             )
+            tooltip.attr('data-value', movieData['value'])
         })
         .on('mouseout', function (movie) {
             tooltip.transition()
