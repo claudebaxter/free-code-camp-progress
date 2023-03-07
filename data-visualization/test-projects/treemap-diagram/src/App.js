@@ -27,6 +27,7 @@ function App() {
       <h2 id='title'>Movie Tree Map</h2>
       <div id='description'>Top 100 Highest Grossing Movies</div>
       <TreemapDiagram pledgeData={pledgeData} movieSales={movieSales} gameSales={gameSales} />      
+      <div id="tooltip"></div>
     </div>
   );
 }
@@ -50,7 +51,7 @@ function TreemapDiagram ({ pledgeData, movieSales, gameSales }) {
 
     let movieData = movieSales;
     let canvas = d3.select('#canvas');
-    //let tooltip = d3.select('#tooltip');
+    let tooltip = d3.select('#tooltip');
     
 
     //set up call back functions = () => {}
@@ -113,6 +114,18 @@ function TreemapDiagram ({ pledgeData, movieSales, gameSales }) {
           .attr('height', (movie) => {
               return movie['y1'] - movie['y0']
           })
+          .on('mouseover', function (event, movie) {
+            tooltip.transition()
+                    .style('visibility', 'visible')
+            let movieData = movie['data']
+            tooltip.text(
+                movieData['name'] + ' : $' + movieData['value']
+            )
+        })
+        .on('mouseout', function (movie) {
+            tooltip.transition()
+                    .style('visibility', 'hidden')
+        })
       
     block.append('text')
           .text((movie) => {
