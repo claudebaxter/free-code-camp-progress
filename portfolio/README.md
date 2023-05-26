@@ -1,5 +1,5 @@
-#portfolio
+#Claude Baxter Portfolio
 
-Example product landing page for Dark Coin project. Completed tutorial from freecodecamp.org.
+This is my portfolio showcasing my Web Development / Blockchain projects and skills.
 
-To view this page, click <a href=https://elborracho420.github.io/free-code-camp-progress/portfolio/index.html title="Test Portfolio"> here.</a>
+To view this page, click <a href=https://claudebaxter.github.io/free-code-camp-progress/portfolio/index.html title="Test Portfolio"> here.</a>
