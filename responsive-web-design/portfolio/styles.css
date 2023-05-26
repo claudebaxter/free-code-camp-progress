@@ -109,7 +109,7 @@ html {
     border-bottom: 3px dotted white;
   }
   
-  #projects {
+  #professional, #projects {
     text-align: center;
     justify-content: center;
     height: relative;
